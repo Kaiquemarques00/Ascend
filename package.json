@@ -1,0 +1,12 @@
+{
+  "name": "ascend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ASCEND — Consistência que transforma",
+  "workspaces": [
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}
