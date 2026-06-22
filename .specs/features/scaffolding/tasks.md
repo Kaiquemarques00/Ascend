@@ -127,10 +127,10 @@ npm run format -- --check package.json 2>/dev/null || npm run format
 - Skill: NONE
 
 **Done when:**
-- [ ] `apps/api/package.json` com `@nestjs/core`, scripts `dev`, `build`, `test`
-- [ ] `nest-cli.json` e `tsconfig.json` extendendo base
-- [ ] `main.ts` bootstraps NestJS na porta `PORT` ou 3000
-- [ ] Gate check passes: `npm run build -w api`
+- [x] `apps/api/package.json` com `@nestjs/core`, scripts `dev`, `build`, `test`
+- [x] `nest-cli.json` e `tsconfig.json` extendendo base
+- [x] `main.ts` bootstraps NestJS na porta `PORT` ou 3000
+- [x] Gate check passes: `npm run build -w api`
 
 **Tests:** none  
 **Gate:** build
@@ -546,7 +546,7 @@ Phase 4:
 | ---- | ------ | ------ | ----- |
 | T1 | Complete | — | Monorepo root structure |
 | T2 | Complete | — | Shared dev tooling |
-| T3 | Pending | — | |
+| T3 | Complete | — | NestJS bootstrap |
 | T4 | Pending | — | |
 | T5 | Pending | — | |
 | T6 | Pending | — | |
