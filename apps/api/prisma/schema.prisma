@@ -1,0 +1,198 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum GoalStatus {
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ProgressScore {
+  MUCH
+  MEDIUM
+  LITTLE
+  NONE
+}
+
+enum SatisfactionScore {
+  EXCELLENT
+  GOOD
+  NEUTRAL
+  BAD
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  areas          Area[]
+  goals          Goal[]
+  energyLogs     EnergyLog[]
+  streaks        Streak[]
+  achievements   Achievement[]
+  weeklyReviews  WeeklyReview[]
+  notifications  Notification[]
+
+  @@map("users")
+}
+
+model Area {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  name      String
+  icon      String
+  color     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goals    Goal[]
+  streaks  Streak[]
+  progress AreaProgress?
+
+  @@map("areas")
+}
+
+model Goal {
+  id          String     @id @default(uuid()) @db.Uuid
+  userId      String     @map("user_id") @db.Uuid
+  areaId      String     @map("area_id") @db.Uuid
+  title       String
+  description String?
+  targetDate  DateTime?  @map("target_date") @db.Date
+  status      GoalStatus @default(ACTIVE)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  area  Area   @relation(fields: [areaId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@map("goals")
+}
+
+model Task {
+  id        String       @id @default(uuid()) @db.Uuid
+  goalId    String       @map("goal_id") @db.Uuid
+  title     String
+  dueDate   DateTime?    @map("due_date")
+  priority  TaskPriority @default(MEDIUM)
+  status    TaskStatus   @default(PENDING)
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+
+  goal     Goal          @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  feedback TaskFeedback?
+
+  @@map("tasks")
+}
+
+model EnergyLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  value     Int
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("energy_logs")
+}
+
+model TaskFeedback {
+  id                String            @id @default(uuid()) @db.Uuid
+  taskId            String            @unique @map("task_id") @db.Uuid
+  progressScore     ProgressScore     @map("progress_score")
+  satisfactionScore SatisfactionScore @map("satisfaction_score")
+  note              String?
+  createdAt         DateTime          @default(now()) @map("created_at")
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@map("task_feedback")
+}
+
+model Streak {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  areaId       String   @map("area_id") @db.Uuid
+  currentValue Int      @default(0) @map("current_value")
+  bestValue    Int      @default(0) @map("best_value")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  area Area @relation(fields: [areaId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, areaId])
+  @@map("streaks")
+}
+
+model AreaProgress {
+  id        String   @id @default(uuid()) @db.Uuid
+  areaId    String   @unique @map("area_id") @db.Uuid
+  xp        Int      @default(0)
+  level     Int      @default(1)
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  area Area @relation(fields: [areaId], references: [id], onDelete: Cascade)
+
+  @@map("area_progress")
+}
+
+model Achievement {
+  id              String   @id @default(uuid()) @db.Uuid
+  userId          String   @map("user_id") @db.Uuid
+  achievementName String   @map("achievement_name")
+  unlockedAt      DateTime @default(now()) @map("unlocked_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementName])
+  @@map("achievements")
+}
+
+model WeeklyReview {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("weekly_reviews")
+}
+
+model Notification {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  title     String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}

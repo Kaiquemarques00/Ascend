@@ -188,11 +188,11 @@ cd apps/api && npm run start 2>&1 | grep -i DATABASE_URL
 - Skill: `supabase`, `supabase-postgres-best-practices`
 
 **Done when:**
-- [ ] 11 models: User, Area, Goal, Task, EnergyLog, TaskFeedback, Streak, AreaProgress, Achievement, WeeklyReview, Notification
-- [ ] Enums: GoalStatus, TaskPriority, TaskStatus, ProgressScore, SatisfactionScore
-- [ ] FKs com `onDelete: Cascade` conforme design
-- [ ] `@@map` snake_case em tabelas e colunas
-- [ ] Gate check passes: `npm run db:generate -w api`
+- [x] 11 models: User, Area, Goal, Task, EnergyLog, TaskFeedback, Streak, AreaProgress, Achievement, WeeklyReview, Notification
+- [x] Enums: GoalStatus, TaskPriority, TaskStatus, ProgressScore, SatisfactionScore
+- [x] FKs com `onDelete: Cascade` conforme design
+- [x] `@@map` snake_case em tabelas e colunas
+- [x] Gate check passes: `npm run db:generate -w api`
 
 **Tests:** none  
 **Gate:** build (`prisma generate`)
@@ -548,7 +548,7 @@ Phase 4:
 | T2 | Complete | — | Shared dev tooling |
 | T3 | Complete | — | NestJS bootstrap |
 | T4 | Complete | — | Config module + env validation |
-| T5 | Pending | — | |
+| T5 | Complete | — | Prisma schema (11 models) |
 | T6 | Pending | — | |
 | T7 | Pending | — | |
 | T8 | Pending | — | |
