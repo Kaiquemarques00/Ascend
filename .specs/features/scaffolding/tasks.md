@@ -157,10 +157,10 @@ npm run build -w api
 - Skill: `supabase` (referência para connection strings)
 
 **Done when:**
-- [ ] `env.validation.ts` valida `DATABASE_URL`, `DIRECT_URL`, `PORT`, `NODE_ENV`
-- [ ] API falha no boot com mensagem clara se `DATABASE_URL` ausente
-- [ ] `.env.example` documenta pooler (:6543) e direct (:5432)
-- [ ] Gate check passes: `npm run build -w api`
+- [x] `env.validation.ts` valida `DATABASE_URL`, `DIRECT_URL`, `PORT`, `NODE_ENV`
+- [x] API falha no boot com mensagem clara se `DATABASE_URL` ausente
+- [x] `.env.example` documenta pooler (:6543) e direct (:5432)
+- [x] Gate check passes: `npm run build -w api`
 
 **Tests:** none  
 **Gate:** build
@@ -547,7 +547,7 @@ Phase 4:
 | T1 | Complete | — | Monorepo root structure |
 | T2 | Complete | — | Shared dev tooling |
 | T3 | Complete | — | NestJS bootstrap |
-| T4 | Pending | — | |
+| T4 | Complete | — | Config module + env validation |
 | T5 | Pending | — | |
 | T6 | Pending | — | |
 | T7 | Pending | — | |
