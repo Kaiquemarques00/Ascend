@@ -220,11 +220,11 @@ grep -c "^model " apps/api/prisma/schema.prisma  # expect 11
 - Skill: `supabase`
 
 **Done when:**
-- [ ] `prisma migrate dev --name init` gera migration (requer Supabase configurado)
-- [ ] `PrismaService` implementa `onModuleInit`/`onModuleDestroy` e `isHealthy()`
-- [ ] Root scripts: `db:migrate`, `db:generate`, `db:studio` no api workspace
-- [ ] API conecta ao DB quando `.env` válido (log de sucesso)
-- [ ] Gate check passes: `npm run build -w api`
+- [x] `prisma migrate dev --name init` gera migration (requer Supabase configurado)
+- [x] `PrismaService` implementa `onModuleInit`/`onModuleDestroy` e `isHealthy()`
+- [x] Root scripts: `db:migrate`, `db:generate`, `db:studio` no api workspace
+- [x] API conecta ao DB quando `.env` válido (log de sucesso)
+- [x] Gate check passes: `npm run build -w api`
 
 **Tests:** none  
 **Gate:** build (+ migrate manual se Supabase disponível)
@@ -549,7 +549,7 @@ Phase 4:
 | T3 | Complete | — | NestJS bootstrap |
 | T4 | Complete | — | Config module + env validation |
 | T5 | Complete | — | Prisma schema (11 models) |
-| T6 | Pending | — | |
+| T6 | Complete | — | Prisma module + initial migration |
 | T7 | Pending | — | |
 | T8 | Pending | — | |
 | T9 | Pending | — | |

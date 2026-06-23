@@ -38,3 +38,9 @@ coverage/
 # Prisma
 apps/api/prisma/*.db
 apps/api/prisma/*.db-journal
+
+# AI tooling (local / duplicated)
+.agents/
+.claude/
+.cursor/
+.windsurf/
