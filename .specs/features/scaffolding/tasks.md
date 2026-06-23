@@ -251,11 +251,11 @@ npm run build -w api
 - Skill: NONE
 
 **Done when:**
-- [ ] `GET /health` retorna `{ status, timestamp, database }` com HTTP 200 quando DB ok
-- [ ] `status: 'degraded'` quando DB offline mas API sobe (opcional) ou API não sobe — documentar comportamento escolhido
-- [ ] `HttpExceptionFilter` retorna `{ statusCode, message, timestamp }` sem stack em production
-- [ ] Unit test: `HealthService` retorna status correto (mock PrismaService)
-- [ ] Gate check passes: `npm run test -w api` + `npm run build -w api`
+- [x] `GET /health` retorna `{ status, timestamp, database }` com HTTP 200 quando DB ok
+- [x] `status: 'degraded'` quando DB offline mas API sobe (opcional) ou API não sobe — documentar comportamento escolhido
+- [x] `HttpExceptionFilter` retorna `{ statusCode, message, timestamp }` sem stack em production
+- [x] Unit test: `HealthService` retorna status correto (mock PrismaService)
+- [x] Gate check passes: `npm run test -w api` + `npm run build -w api`
 
 **Tests:** unit  
 **Gate:** quick
@@ -550,7 +550,7 @@ Phase 4:
 | T4 | Complete | — | Config module + env validation |
 | T5 | Complete | — | Prisma schema (11 models) |
 | T6 | Complete | — | Prisma module + initial migration |
-| T7 | Pending | — | |
+| T7 | Complete | — | Health endpoint + exception filter |
 | T8 | Pending | — | |
 | T9 | Pending | — | |
 | T10 | Pending | — | |
