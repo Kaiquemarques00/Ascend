@@ -29,6 +29,7 @@
 
 **Key dependencies:**
 
+- Node.js 20.19.4+ (Expo SDK 54)
 - Expo EAS (build/deploy mobile)
 - Supabase (PostgreSQL + auth helpers)
 - Railway ou Render (hosting backend)

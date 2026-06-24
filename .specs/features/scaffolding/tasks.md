@@ -55,7 +55,7 @@ T10, T11 complete ──→ T12
 
 ### T1: Root Monorepo Structure
 
-**What:** Criar `package.json` root com npm workspaces, `.gitignore`, `.nvmrc` (Node 20)  
+**What:** Criar `package.json` root com npm workspaces, `.gitignore`, `.nvmrc` (Node 20.19.4)  
 **Where:** `/package.json`, `/.gitignore`, `/.nvmrc`, `/apps/` (diretórios vazios)  
 **Depends on:** None  
 **Reuses:** —  
@@ -68,7 +68,7 @@ T10, T11 complete ──→ T12
 **Done when:**
 - [x] `package.json` define `"workspaces": ["apps/*"]`
 - [x] `.gitignore` inclui `node_modules`, `.env`, `dist`, `.expo`, `generated`
-- [x] `.nvmrc` contém `20`
+- [x] `.nvmrc` contém `20.19.4`
 - [x] Diretórios `apps/mobile` e `apps/api` existem
 
 **Tests:** none  
@@ -273,7 +273,7 @@ sleep 3 && curl -s http://localhost:3000/health | jq .
 
 ### T8: Expo App Bootstrap [P]
 
-**What:** Criar app Expo SDK 52 com Expo Router em `apps/mobile`  
+**What:** Criar app Expo SDK 54 com Expo Router em `apps/mobile`  
 **Where:** `apps/mobile/`  
 **Depends on:** T2  
 **Reuses:** Root workspace from T1/T2  
@@ -283,10 +283,10 @@ sleep 3 && curl -s http://localhost:3000/health | jq .
 - Skill: NONE
 
 **Done when:**
-- [ ] `apps/mobile/package.json` com expo ~52, expo-router ~4, typescript
-- [ ] `app/_layout.tsx` root layout com `Stack` ou slot para tabs
-- [ ] `app.json` configurado (nome ASCEND, slug ascend)
-- [ ] Gate check passes: `npm run build -w mobile` ou `npx expo export --platform web` sem erro
+- [x] `apps/mobile/package.json` com expo ~54, expo-router ~6, typescript
+- [x] `app/_layout.tsx` root layout com `Stack` ou slot para tabs
+- [x] `app.json` configurado (nome ASCEND, slug ascend)
+- [x] Gate check passes: `npm run build -w mobile` ou `npx expo export --platform web` sem erro
 
 **Tests:** none  
 **Gate:** build
@@ -378,7 +378,7 @@ npx expo start -c  # manual: 4 tabs visíveis, tema dark
 
 **Done when:**
 - [ ] Workflow dispara em `push` e `pull_request`
-- [ ] Steps: checkout, setup-node 20, `npm ci`, `npm run lint`, `npm run build`
+- [ ] Steps: checkout, setup-node **20.19.4**, `npm ci`, `npm run lint`, `npm run build`
 - [ ] Stub `DATABASE_URL` e `DIRECT_URL` para build (prisma generate only)
 - [ ] Jobs nomeados por app em caso de falha
 - [ ] Gate check passes: `npm run lint && npm run build` localmente
@@ -409,7 +409,7 @@ npm run lint && npm run build
 - Skill: `supabase`
 
 **Done when:**
-- [ ] README: overview, stack, folder structure, prerequisites (Node 20, Expo, Supabase)
+- [ ] README: overview, stack, folder structure, prerequisites (Node 20.19.4+, Expo Go SDK 54, Supabase)
 - [ ] Setup steps: install → env → migrate → dev
 - [ ] Documenta `EXPO_PUBLIC_API_URL` para iOS/Android/device físico
 - [ ] Troubleshooting: NativeWind cache, Supabase paused, port in use
@@ -551,7 +551,7 @@ Phase 4:
 | T5 | Complete | — | Prisma schema (11 models) |
 | T6 | Complete | — | Prisma module + initial migration |
 | T7 | Complete | — | Health endpoint + exception filter |
-| T8 | Pending | — | |
+| T8 | Complete | — | Expo SDK 54 bootstrap with Expo Router |
 | T9 | Pending | — | |
 | T10 | Pending | — | |
 | T11 | Pending | — | |

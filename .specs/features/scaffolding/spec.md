@@ -47,7 +47,7 @@ Explicitamente excluído desta feature. Documentado para evitar scope creep.
 2. WHEN developer runs the root install command THEN system SHALL install dependencies for all workspace packages without manual per-app setup
 3. WHEN developer runs documented dev scripts THEN system SHALL start mobile and API independently or together
 4. WHEN repository is inspected THEN system SHALL include root-level config files for TypeScript, linting and formatting shared across apps
-5. WHEN developer reads README THEN system SHALL document prerequisites (Node.js version, package manager, Expo CLI, Supabase account)
+5. WHEN developer reads README THEN system SHALL document prerequisites (Node.js **20.19.4+**, npm, Expo Go SDK 54, Supabase account)
 
 **Independent Test**: Clone repo → `npm install` (or documented equivalent) → both `apps/mobile` and `apps/api` exist with valid `package.json` and start scripts.
 
@@ -201,7 +201,7 @@ Explicitamente excluído desta feature. Documentado para evitar scope creep.
 
 ## Edge Cases
 
-- WHEN Node.js version is below minimum THEN install script SHALL warn or fail with required version
+- WHEN Node.js version is below **20.19.4** THEN install script SHALL warn or fail with required version
 - WHEN Supabase project is paused (free tier) THEN API startup SHALL log connection error with actionable message
 - WHEN port 3000 is already in use THEN API SHALL fail with clear "port in use" message or support `PORT` override
 - WHEN Expo runs on physical device THEN README SHALL document LAN IP configuration for `EXPO_PUBLIC_API_URL`

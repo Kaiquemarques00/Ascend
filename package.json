@@ -6,6 +6,9 @@
   "workspaces": [
     "apps/*"
   ],
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
   "scripts": {
     "dev": "concurrently -n api,mobile -c blue,magenta \"npm run dev -w api --if-present\" \"npm run dev -w mobile --if-present\"",
     "dev:api": "npm run dev -w api --if-present",
@@ -15,7 +18,12 @@
     "format": "prettier --write"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19.4"
+  },
+  "overrides": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

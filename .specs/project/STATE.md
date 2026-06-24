@@ -1,7 +1,7 @@
 # State
 
-**Last Updated:** 2026-06-19
-**Current Work:** M1 — Project Scaffolding (T2 complete → T3/T8 next)
+**Last Updated:** 2026-06-23
+**Current Work:** M1 — Project Scaffolding (T8 complete → T9 next)
 
 ---
 
@@ -23,10 +23,24 @@
 
 ### AD-004: Decisões de arquitetura do scaffolding (2026-06-19)
 
-**Decision:** npm workspaces, Prisma 6.x, Expo SDK 52 + NativeWind 4.2.1 pinado, mobile → API only
-**Reason:** Simplicidade para solo dev; Prisma 6 tem `directUrl` nativo para Supabase; NativeWind tem histórico de incompatibilidade entre SDKs
-**Trade-off:** Sem `packages/shared` inicial; upgrade de SDK avaliado em M5
-**Impact:** Design em `.specs/features/scaffolding/design.md`; 7 tarefas de implementação planejadas
+**Decision:** npm workspaces, Prisma 6.x, Expo SDK 54 + NativeWind 4.2.1 pinado, mobile → API only
+**Reason:** Simplicidade para solo dev; Prisma 6 tem `directUrl` nativo para Supabase; SDK 54 alinha com Expo Go atual
+**Trade-off:** Sem `packages/shared` inicial; Reanimated v4 exige NativeWind 4.2.1+ na T9
+**Impact:** Design em `.specs/features/scaffolding/design.md`; 12 tarefas de implementação planejadas
+
+### AD-005: Upgrade Expo SDK 52 → 54 (2026-06-23)
+
+**Decision:** Subir `apps/mobile` para Expo SDK 54 (React Native 0.81, React 19, Expo Router ~6)
+**Reason:** Expo Go no dispositivo do dev suporta apenas SDK 54; SDK 52 era incompatível
+**Trade-off:** Node mínimo sobe para 20.19.4; NativeWind na T9 deve usar Reanimated v4
+**Impact:** `.nvmrc`, `package.json` engines e docs de scaffolding atualizados
+
+### AD-006: Node.js 20.19.4+ no ambiente local (2026-06-23)
+
+**Decision:** Exigir Node **≥20.19.4** (`.nvmrc` pinado em `20.19.4`; ambiente local atualizado para 20.20.2 via winget)
+**Reason:** Metro e React Native 0.81 do Expo SDK 54 exigem Node ≥20.19.4
+**Trade-off:** Devs em Node 20.17 precisam atualizar antes de `expo start`
+**Impact:** `engines` no root `package.json`, CI (T11) e prerequisites do README
 
 ---
 

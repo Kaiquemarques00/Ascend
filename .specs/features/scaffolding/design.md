@@ -103,7 +103,7 @@ ASCEND/
 │       └── tsconfig.json
 ├── .gitignore
 ├── .prettierrc
-├── .nvmrc                           # 20
+├── .nvmrc                           # 20.19.4 (mínimo SDK 54)
 ├── eslint.config.mjs                # flat config compartilhado
 ├── package.json                     # workspaces root
 ├── tsconfig.base.json
@@ -136,11 +136,11 @@ ASCEND/
 
 | Decision | Choice | Rationale | SCAF |
 | -------- | ------ | --------- | ---- |
-| Package manager | npm workspaces | Zero config extra, nativo Node 20+, spec default | 01–05 |
+| Package manager | npm workspaces | Zero config extra, nativo Node 20.19.4+, spec default | 01–05 |
 | ORM | Prisma 6.x | DX excelente com NestJS; `directUrl` nativo para Supabase; Prisma 7 tem setup mais complexo | 18–27 |
 | Migrations | Prisma Migrate | Versionadas, idempotentes, integradas ao schema | 18–27 |
 | Mobile → Backend | API only | Segurança, lógica centralizada; auth JWT virá na API | 41–44 |
-| Expo SDK | SDK 52 (pinned) | Estável com NativeWind 4.2.x; evita incompatibilidades Reanimated v4 | 06–11 |
+| Expo SDK | SDK 54 (pinned) | Compatível com Expo Go atual; NativeWind 4.2.1 + Reanimated v4 | 06–11 |
 | NativeWind | 4.2.1 + Tailwind 3.4.17 | Versões pinadas — NativeWind tem histórico de breakage entre SDKs | 06–11 |
 | Navigation | Expo Router (tabs) | Spec requirement; file-based routing | 09 |
 | API port | 3000 default | Convenção NestJS; override via `PORT` | 12–17 |
@@ -611,15 +611,17 @@ module.exports = {
 
 ```json
 {
-  "expo": "~52.0.0",
+  "expo": "~54.0.0",
+  "expo-router": "~6.0.0",
   "nativewind": "4.2.1",
   "tailwindcss": "3.4.17",
-  "react-native-reanimated": "~3.16.1",
-  "react-native-safe-area-context": "~4.12.0",
-  "@tanstack/react-query": "^5.0.0",
-  "expo-router": "~4.0.0"
+  "react-native-reanimated": "~4.1.1",
+  "react-native-safe-area-context": "~5.6.0",
+  "@tanstack/react-query": "^5.0.0"
 }
 ```
+
+> **Nota SDK 54:** usar apenas `react-native-reanimated/plugin` no Babel (não adicionar `react-native-worklets/plugin` separado — Reanimated v4 já inclui worklets).
 
 > **Nota de implementação:** Após setup NativeWind, rodar `npx expo start -c` para limpar cache. Garantir que `content` paths incluem `app/` e `components/`.
 
@@ -668,6 +670,7 @@ EXPO_PUBLIC_API_URL=http://localhost:3000
 ## Dev Workflow
 
 ```bash
+# 0. Prerequisites: Node 20.19.4+ (nvm use / winget install OpenJS.NodeJS.20)
 # 1. Clone & install
 npm install
 
@@ -734,5 +737,5 @@ T2 e T3 podem ser sequenciais (T3 depende de T2 para PrismaModule). T4 pode roda
 | Topic | Status | Notes |
 | ----- | ------ | ----- |
 | Prisma 7 vs 6 | **Decided: Prisma 6** | Prisma 7 exige driver adapters e `prisma.config.ts` — mais complexo para scaffolding |
-| Expo SDK 53+ | **Uncertain** | SDK 52 pinado por estabilidade NativeWind; upgrade avaliar em M5 polish |
+| Expo SDK 53+ | **Decided: SDK 54** | Upgrade feito em 2026-06-23 para compatibilidade com Expo Go; NativeWind 4.2.1 na T9 |
 | Husky pre-commit | **Optional P2** | Implementar se não atrasar T1; lint manual ok para solo dev |
