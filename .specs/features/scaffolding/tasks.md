@@ -377,11 +377,11 @@ npx expo start -c  # manual: 4 tabs visíveis, tema dark
 - Skill: NONE
 
 **Done when:**
-- [ ] Workflow dispara em `push` e `pull_request`
-- [ ] Steps: checkout, setup-node **20.19.4**, `npm ci`, `npm run lint`, `npm run build`
-- [ ] Stub `DATABASE_URL` e `DIRECT_URL` para build (prisma generate only)
-- [ ] Jobs nomeados por app em caso de falha
-- [ ] Gate check passes: `npm run lint && npm run build` localmente
+- [x] Workflow dispara em `push` e `pull_request`
+- [x] Steps: checkout, setup-node **20.19.4**, `npm ci`, `npm run lint`, `npm run build`
+- [x] Stub `DATABASE_URL` e `DIRECT_URL` para build (prisma generate only)
+- [x] Jobs nomeados por app em caso de falha
+- [x] Gate check passes: `npm run lint && npm run build` localmente
 
 **Tests:** none  
 **Gate:** build
@@ -554,7 +554,7 @@ Phase 4:
 | T8 | Complete | — | Expo SDK 54 bootstrap with Expo Router |
 | T9 | Pending | — | |
 | T10 | Pending | — | |
-| T11 | Pending | — | |
+| T11 | Complete | — | GitHub Actions CI (lint + build) |
 | T12 | Pending | — | |
 
 ---

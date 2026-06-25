@@ -14,6 +14,7 @@ export default tseslint.config(
       '**/.expo/**',
       '**/generated/**',
       '**/coverage/**',
+      '**/*.config.js',
     ],
   },
 );
