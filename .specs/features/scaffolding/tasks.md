@@ -2,7 +2,7 @@
 
 **Design:** `.specs/features/scaffolding/design.md`  
 **Spec:** `.specs/features/scaffolding/spec.md`  
-**Status:** Approved
+**Status:** Complete (2026-06-25 — validado localmente + CI)
 
 ---
 
@@ -526,17 +526,17 @@ Phase 4:
 
 | Requirement ID | Task(s) | Status |
 | -------------- | ------- | ------ |
-| SCAF-01 – SCAF-05 | T1, T2, T12 | Mapped |
-| SCAF-06 – SCAF-11 | T8, T9 | Mapped |
-| SCAF-12 – SCAF-17 | T3, T7 | Mapped |
-| SCAF-18 – SCAF-27 | T5, T6 | Mapped |
-| SCAF-28 – SCAF-32 | T4, T12 | Mapped |
-| SCAF-33 – SCAF-36 | T2 (+ optional T2b) | Mapped |
-| SCAF-37 – SCAF-40 | T11 | Mapped |
-| SCAF-41 – SCAF-44 | T10, T12 | Mapped |
-| SCAF-45 – SCAF-47 | T12 | Mapped |
+| SCAF-01 – SCAF-05 | T1, T2, T12 | ✅ Implemented |
+| SCAF-06 – SCAF-11 | T8, T9 | ✅ Implemented |
+| SCAF-12 – SCAF-17 | T3, T7 | ✅ Implemented |
+| SCAF-18 – SCAF-27 | T5, T6 | ✅ Implemented |
+| SCAF-28 – SCAF-32 | T4, T12 | ✅ Implemented |
+| SCAF-33 – SCAF-36 | T2 (+ optional T2b) | ✅ Implemented (SCAF-35 deferred) |
+| SCAF-37 – SCAF-40 | T11 | ✅ Implemented |
+| SCAF-41 – SCAF-44 | T10, T12 | ✅ Implemented |
+| SCAF-45 – SCAF-47 | T12 | ✅ Implemented |
 
-**Coverage:** 47 total, 47 mapped to tasks, 0 unmapped ✅
+**Coverage:** 47 total, 46 implemented, 1 deferred (SCAF-35) ✅
 
 ---
 
@@ -552,8 +552,8 @@ Phase 4:
 | T6 | Complete | — | Prisma module + initial migration |
 | T7 | Complete | — | Health endpoint + exception filter |
 | T8 | Complete | — | Expo SDK 54 bootstrap with Expo Router |
-| T9 | Pending | — | |
-| T10 | Pending | — | |
+| T9 | Complete | — | NativeWind dark theme + tab shell |
+| T10 | Complete | — | API client + ApiStatus on Dashboard |
 | T11 | Complete | — | GitHub Actions CI (lint + build) |
 | T12 | Complete | — | Developer onboarding README |
 

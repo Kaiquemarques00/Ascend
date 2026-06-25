@@ -1,21 +1,21 @@
 # Project Scaffolding Specification
 
 **Milestone:** M1 — Fundação  
-**Status:** Specified (tasks approved — ready for execute)  
+**Status:** Complete (2026-06-25 — T1–T12 implementadas e validadas)  
 **Related:** Authentication (feature separada — depende desta)
 
 ## Problem Statement
 
-O ASCEND ainda não possui código — apenas documentação de produto (`ascend.md`) e planejamento (`.specs/project/`). Sem uma fundação técnica consistente (monorepo, app mobile, API, banco e tooling de desenvolvimento), nenhuma feature do MVP pode ser implementada de forma incremental e verificável.
+O ASCEND iniciou sem código de aplicação — apenas documentação de produto (`ascend.md`) e planejamento (`.specs/project/`). Sem uma fundação técnica consistente (monorepo, app mobile, API, banco e tooling de desenvolvimento), nenhuma feature do MVP poderia ser implementada de forma incremental e verificável.
 
-Esta feature resolve o problema de "cold start": transformar o repositório vazio em um ambiente de desenvolvimento funcional onde mobile e backend rodam localmente, compartilham convenções e o banco está provisionado com o schema base do MVP.
+Esta feature resolveu o problema de "cold start": o repositório agora é um ambiente de desenvolvimento funcional onde mobile e backend rodam localmente, compartilham convenções e o banco está provisionado com o schema base do MVP.
 
 ## Goals
 
-- [ ] Desenvolvedor clona o repo, instala dependências e sobe mobile + API em **< 15 minutos** seguindo o README
-- [ ] App Expo exibe shell navegável com tema dark base do protótipo
-- [ ] API NestJS responde a health check e conecta ao PostgreSQL (Supabase)
-- [ ] Schema MVP completo aplicado via migrations versionadas e reproduzíveis
+- [x] Desenvolvedor clona o repo, instala dependências e sobe mobile + API em **< 15 minutos** seguindo o README
+- [x] App Expo exibe shell navegável com tema dark base do protótipo
+- [x] API NestJS responde a health check e conecta ao PostgreSQL (Supabase)
+- [x] Schema MVP completo aplicado via migrations versionadas e reproduzíveis
 
 ## Out of Scope
 
@@ -228,55 +228,55 @@ Decisões técnicas a resolver em `design.md` — não bloqueiam aprovação des
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| SCAF-01 | P1: Monorepo Structure | Design | ✅ Designed |
-| SCAF-02 | P1: Monorepo Structure | Design | ✅ Designed |
-| SCAF-03 | P1: Monorepo Structure | Design | ✅ Designed |
-| SCAF-04 | P1: Monorepo Structure | Design | ✅ Designed |
-| SCAF-05 | P1: Monorepo Structure | Design | ✅ Designed |
-| SCAF-06 | P1: Expo Mobile Shell | Design | ✅ Designed |
-| SCAF-07 | P1: Expo Mobile Shell | Design | ✅ Designed |
-| SCAF-08 | P1: Expo Mobile Shell | Design | ✅ Designed |
-| SCAF-09 | P1: Expo Mobile Shell | Design | ✅ Designed |
-| SCAF-10 | P1: Expo Mobile Shell | Design | ✅ Designed |
-| SCAF-11 | P1: Expo Mobile Shell | Design | ✅ Designed |
-| SCAF-12 | P1: NestJS API Foundation | Design | ✅ Designed |
-| SCAF-13 | P1: NestJS API Foundation | Design | ✅ Designed |
-| SCAF-14 | P1: NestJS API Foundation | Design | ✅ Designed |
-| SCAF-15 | P1: NestJS API Foundation | Design | ✅ Designed |
-| SCAF-16 | P1: NestJS API Foundation | Design | ✅ Designed |
-| SCAF-17 | P1: NestJS API Foundation | Design | ✅ Designed |
-| SCAF-18 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-19 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-20 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-21 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-22 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-23 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-24 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-25 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-26 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-27 | P1: Database Schema & Migrations | Design | ✅ Designed |
-| SCAF-28 | P1: Environment Configuration | Design | ✅ Designed |
-| SCAF-29 | P1: Environment Configuration | Design | ✅ Designed |
-| SCAF-30 | P1: Environment Configuration | Design | ✅ Designed |
-| SCAF-31 | P1: Environment Configuration | Design | ✅ Designed |
-| SCAF-32 | P1: Environment Configuration | Design | ✅ Designed |
-| SCAF-33 | P2: Shared Tooling | Tasks | ✅ Mapped → T2 |
-| SCAF-34 | P2: Shared Tooling | Tasks | ✅ Mapped → T2 |
-| SCAF-35 | P2: Shared Tooling | Tasks | ✅ Mapped → T2b (optional) |
-| SCAF-36 | P2: Shared Tooling | Tasks | ✅ Mapped → T2 |
-| SCAF-37 | P2: Basic CI Pipeline | Tasks | ✅ Mapped → T11 |
-| SCAF-38 | P2: Basic CI Pipeline | Tasks | ✅ Mapped → T11 |
-| SCAF-39 | P2: Basic CI Pipeline | Tasks | ✅ Mapped → T11 |
-| SCAF-40 | P2: Basic CI Pipeline | Tasks | ✅ Mapped → T11 |
-| SCAF-41 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Mapped → T10 |
-| SCAF-42 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Mapped → T10 |
-| SCAF-43 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Mapped → T10 |
-| SCAF-44 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Mapped → T10, T12 |
-| SCAF-45 | P3: README & DX | Tasks | ✅ Mapped → T12 |
-| SCAF-46 | P3: README & DX | Tasks | ✅ Mapped → T12 |
-| SCAF-47 | P3: README & DX | Tasks | ✅ Mapped → T12 |
+| SCAF-01 | P1: Monorepo Structure | Design | ✅ Implemented |
+| SCAF-02 | P1: Monorepo Structure | Design | ✅ Implemented |
+| SCAF-03 | P1: Monorepo Structure | Design | ✅ Implemented |
+| SCAF-04 | P1: Monorepo Structure | Design | ✅ Implemented |
+| SCAF-05 | P1: Monorepo Structure | Design | ✅ Implemented |
+| SCAF-06 | P1: Expo Mobile Shell | Design | ✅ Implemented |
+| SCAF-07 | P1: Expo Mobile Shell | Design | ✅ Implemented |
+| SCAF-08 | P1: Expo Mobile Shell | Design | ✅ Implemented |
+| SCAF-09 | P1: Expo Mobile Shell | Design | ✅ Implemented |
+| SCAF-10 | P1: Expo Mobile Shell | Design | ✅ Implemented |
+| SCAF-11 | P1: Expo Mobile Shell | Design | ✅ Implemented |
+| SCAF-12 | P1: NestJS API Foundation | Design | ✅ Implemented |
+| SCAF-13 | P1: NestJS API Foundation | Design | ✅ Implemented |
+| SCAF-14 | P1: NestJS API Foundation | Design | ✅ Implemented |
+| SCAF-15 | P1: NestJS API Foundation | Design | ✅ Implemented |
+| SCAF-16 | P1: NestJS API Foundation | Design | ✅ Implemented |
+| SCAF-17 | P1: NestJS API Foundation | Design | ✅ Implemented |
+| SCAF-18 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-19 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-20 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-21 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-22 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-23 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-24 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-25 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-26 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-27 | P1: Database Schema & Migrations | Design | ✅ Implemented |
+| SCAF-28 | P1: Environment Configuration | Design | ✅ Implemented |
+| SCAF-29 | P1: Environment Configuration | Design | ✅ Implemented |
+| SCAF-30 | P1: Environment Configuration | Design | ✅ Implemented |
+| SCAF-31 | P1: Environment Configuration | Design | ✅ Implemented |
+| SCAF-32 | P1: Environment Configuration | Design | ✅ Implemented |
+| SCAF-33 | P2: Shared Tooling | Tasks | ✅ Implemented (T2) |
+| SCAF-34 | P2: Shared Tooling | Tasks | ✅ Implemented (T2) |
+| SCAF-35 | P2: Shared Tooling | Tasks | ⏸ Deferred (T2b optional) |
+| SCAF-36 | P2: Shared Tooling | Tasks | ✅ Implemented (T2) |
+| SCAF-37 | P2: Basic CI Pipeline | Tasks | ✅ Implemented (T11) |
+| SCAF-38 | P2: Basic CI Pipeline | Tasks | ✅ Implemented (T11) |
+| SCAF-39 | P2: Basic CI Pipeline | Tasks | ✅ Implemented (T11) |
+| SCAF-40 | P2: Basic CI Pipeline | Tasks | ✅ Implemented (T11) |
+| SCAF-41 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Implemented (T10) |
+| SCAF-42 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Implemented (T10) |
+| SCAF-43 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Implemented (T10) |
+| SCAF-44 | P2: Mobile ↔ API Connectivity | Tasks | ✅ Implemented (T10, T12) |
+| SCAF-45 | P3: README & DX | Tasks | ✅ Implemented (T12) |
+| SCAF-46 | P3: README & DX | Tasks | ✅ Implemented (T12) |
+| SCAF-47 | P3: README & DX | Tasks | ✅ Implemented (T12) |
 
-**Coverage:** 47 total, 47 mapped to tasks, 0 unmapped ✅
+**Coverage:** 47 total, 46 implemented, 1 deferred (SCAF-35 optional) ✅
 
 ---
 
@@ -284,9 +284,9 @@ Decisões técnicas a resolver em `design.md` — não bloqueiam aprovação des
 
 How we know the feature is successful:
 
-- [ ] Novo desenvolvedor sobe mobile + API + banco em < 15 minutos via README
-- [ ] `GET /health` retorna 200; mobile exibe status de conexão (P2)
-- [ ] 11 tabelas MVP existem no Supabase com FKs corretas
-- [ ] 4 tabs navegáveis no app com tema dark base
-- [ ] CI passa lint + build em PR (P2)
-- [ ] Zero secrets commitados no repositório
+- [x] Novo desenvolvedor sobe mobile + API + banco em < 15 minutos via README
+- [x] `GET /health` retorna 200; mobile exibe status de conexão (P2)
+- [x] 11 tabelas MVP existem no Supabase com FKs corretas
+- [x] 4 tabs navegáveis no app com tema dark base
+- [x] CI passa lint + build em PR (P2)
+- [x] Zero secrets commitados no repositório

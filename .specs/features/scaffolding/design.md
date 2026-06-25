@@ -1,7 +1,7 @@
 # Project Scaffolding Design
 
 **Spec:** `.specs/features/scaffolding/spec.md`  
-**Status:** Approved  
+**Status:** Complete (2026-06-25)  
 **Milestone:** M1 — Fundação
 
 ---
@@ -720,15 +720,17 @@ curl http://localhost:3000/health
 
 ## Implementation Order (for Tasks phase)
 
-1. **T1** — Root monorepo + shared tooling (SCAF 01–05, 33–36)
-2. **T2** — NestJS API skeleton + config + health (SCAF 12–17, 28–32)
-3. **T3** — Prisma schema + initial migration (SCAF 18–27)
-4. **T4** — Expo app + NativeWind + tabs shell (SCAF 06–11)
-5. **T5** — Mobile API client + ApiStatus (SCAF 41–44)
-6. **T6** — CI workflow (SCAF 37–40)
-7. **T7** — README completo (SCAF 45–47)
+**Status:** ✅ Concluído (T1–T12, 2026-06-25)
 
-T2 e T3 podem ser sequenciais (T3 depende de T2 para PrismaModule). T4 pode rodar em **paralelo** com T2/T3 após T1.
+1. **T1** — Root monorepo + shared tooling (SCAF 01–05, 33–36)
+2. **T2** — Shared dev tooling (ESLint, Prettier, root scripts)
+3. **T3–T7** — API track: NestJS → config → Prisma → health
+4. **T8–T9** — Mobile track: Expo bootstrap → NativeWind + tabs
+5. **T10** — Mobile API client + ApiStatus
+6. **T11** — CI workflow (lint + build)
+7. **T12** — README & developer onboarding
+
+T8/T9 rodaram em paralelo com T3–T7 após T2. T10 e T11 em paralelo após T7 + T9.
 
 ---
 

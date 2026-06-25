@@ -1,7 +1,7 @@
 # Roadmap
 
 **Current Milestone:** M1 — Fundação
-**Status:** Planning → In Progress (T1)
+**Status:** Scaffolding complete → Authentication next
 
 ---
 
@@ -12,15 +12,16 @@
 
 ### Features
 
-**Project Scaffolding** - IN PROGRESS → [spec](../features/scaffolding/spec.md) · [design](../features/scaffolding/design.md) · [tasks](../features/scaffolding/tasks.md)
+**Project Scaffolding** - ✅ COMPLETE → [spec](../features/scaffolding/spec.md) · [design](../features/scaffolding/design.md) · [tasks](../features/scaffolding/tasks.md)
 
 - Estrutura monorepo (mobile + api)
 - Expo app com TypeScript, NativeWind e React Query
 - NestJS API com módulos base
 - Supabase PostgreSQL com migrations iniciais
 - CI básico e variáveis de ambiente documentadas
+- README de onboarding (`/README.md`)
 
-**Authentication** - PLANNED
+**Authentication** - PLANNED (next)
 
 - Registro e login por email
 - JWT session management
