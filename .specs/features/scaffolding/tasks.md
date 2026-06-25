@@ -409,12 +409,12 @@ npm run lint && npm run build
 - Skill: `supabase`
 
 **Done when:**
-- [ ] README: overview, stack, folder structure, prerequisites (Node 20.19.4+, Expo Go SDK 54, Supabase)
-- [ ] Setup steps: install → env → migrate → dev
-- [ ] Documenta `EXPO_PUBLIC_API_URL` para iOS/Android/device físico
-- [ ] Troubleshooting: NativeWind cache, Supabase paused, port in use
-- [ ] Link para `.specs/project/PROJECT.md`
-- [ ] Gate check passes: seguir README do zero em ambiente limpo (validação manual)
+- [x] README: overview, stack, folder structure, prerequisites (Node 20.19.4+, Expo Go SDK 54, Supabase)
+- [x] Setup steps: install → env → migrate → dev
+- [x] Documenta `EXPO_PUBLIC_API_URL` para iOS/Android/device físico
+- [x] Troubleshooting: NativeWind cache, Supabase paused, port in use
+- [x] Link para `.specs/project/PROJECT.md`
+- [x] Gate check passes: seguir README do zero em ambiente limpo (validação manual)
 
 **Tests:** none  
 **Gate:** full (manual onboarding checklist)
@@ -555,7 +555,7 @@ Phase 4:
 | T9 | Pending | — | |
 | T10 | Pending | — | |
 | T11 | Complete | — | GitHub Actions CI (lint + build) |
-| T12 | Pending | — | |
+| T12 | Complete | — | Developer onboarding README |
 
 ---
 
