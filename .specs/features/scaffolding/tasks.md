@@ -313,12 +313,12 @@ npx expo export --platform web -w mobile 2>&1 | tail -5
 - Skill: NONE
 
 **Done when:**
-- [ ] NativeWind configurado: `global.css`, `tailwind.config.js`, `metro.config.js`, `babel.config.js`, `nativewind-env.d.ts`
-- [ ] 4 tabs: Dashboard (`index`), Áreas, Objetivos, Perfil — navegáveis
-- [ ] Tema dark: background `#0F172A`, primary `#8B5CF6`
-- [ ] Dashboard exibe "ASCEND" + tagline "Consistência que transforma"
-- [ ] React Query `QueryClientProvider` no root layout
-- [ ] Gate check passes: expo export/build sem erro
+- [x] NativeWind configurado: `global.css`, `tailwind.config.js`, `metro.config.js`, `babel.config.js`, `nativewind-env.d.ts`
+- [x] 4 tabs: Dashboard (`index`), Áreas, Objetivos, Perfil — navegáveis
+- [x] Tema dark: background `#0F172A`, primary `#8B5CF6`
+- [x] Dashboard exibe "ASCEND" + tagline "Consistência que transforma"
+- [x] React Query `QueryClientProvider` no root layout
+- [x] Gate check passes: expo export/build sem erro
 
 **Tests:** none  
 **Gate:** build
