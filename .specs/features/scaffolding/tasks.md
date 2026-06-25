@@ -344,11 +344,11 @@ npx expo start -c  # manual: 4 tabs visíveis, tema dark
 - Skill: NONE
 
 **Done when:**
-- [ ] `EXPO_PUBLIC_API_URL` em `apps/mobile/.env.example`
-- [ ] `getHealth()` chama `GET /health` via fetch
-- [ ] Dashboard exibe "API conectada" (verde) quando API ok
-- [ ] Dashboard exibe "API offline" quando API indisponível — sem crash
-- [ ] Gate check passes: `npm run build -w mobile`
+- [x] `EXPO_PUBLIC_API_URL` em `apps/mobile/.env.example`
+- [x] `getHealth()` chama `GET /health` via fetch
+- [x] Dashboard exibe "API conectada" (verde) quando API ok
+- [x] Dashboard exibe "API offline" quando API indisponível — sem crash
+- [x] Gate check passes: `npm run build -w mobile`
 
 **Tests:** none  
 **Gate:** build (+ manual com API rodando)
