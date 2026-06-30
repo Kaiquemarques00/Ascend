@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 
-import { getMe, login as loginApi, register as registerApi } from '@/lib/auth-api';
+import { getMe, login as loginApi, loginGoogle as loginGoogleApi, register as registerApi } from '@/lib/auth-api';
 import { clearAccessToken, getAccessToken, setAccessToken } from '@/lib/auth-storage';
 import type { AuthSession, AuthUser, LoginParams, RegisterParams } from '@/lib/auth.types';
 
@@ -18,6 +18,7 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   signIn: (params: LoginParams) => Promise<void>;
   signUp: (params: RegisterParams) => Promise<void>;
+  signInWithGoogle: (idToken: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -95,6 +96,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [applySession],
   );
 
+  const signInWithGoogle = useCallback(
+    async (idToken: string) => {
+      const session = await loginGoogleApi({ idToken });
+      await applySession(session);
+    },
+    [applySession],
+  );
+
   const signOut = useCallback(async () => {
     await clearAccessToken();
     setUser(null);
@@ -102,7 +111,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, isAuthenticated: user !== null, signIn, signUp, signOut }}
+      value={{
+        user,
+        isLoading,
+        isAuthenticated: user !== null,
+        signIn,
+        signUp,
+        signInWithGoogle,
+        signOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

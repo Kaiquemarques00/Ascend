@@ -1,7 +1,7 @@
 # State
 
-**Last Updated:** 2026-06-25
-**Current Work:** M1 — Authentication (tasks ready → execute T1)
+**Last Updated:** 2026-06-30
+**Current Work:** M1 — Authentication P1 complete; P2 OAuth (T7/T8) pausado → próximo: T9 Refresh ou T10 CI
 
 ---
 
@@ -56,11 +56,20 @@
 **Trade-off:** Husky pre-commit (T2b) permanece opcional e não implementado
 **Impact:** ROADMAP marca scaffolding como COMPLETE; specs atualizadas para status Complete
 
+### AD-008: OAuth Google/Apple adiado (2026-06-30)
+
+**Decision:** Pausar UAT do Google Sign-In (T7) e adiar Apple Sign-In (T8); seguir com T9–T11 sem OAuth
+**Reason:** Google OAuth retorna `400: invalid_request` no Expo Go (config redirect URI / client IDs / SHA-1); Apple requer Apple Dev account e tempo extra
+**Trade-off:** P2 OAuth incompleto até retomar; login email/senha + sessão permanecem MVP
+**Impact:** Documentado em `.specs/features/authentication/deferred-oauth.md`; T9 não bloqueado por OAuth
+
 ---
 
 ## Active Blockers
 
-_Nenhum bloqueador ativo._
+_Nenhum bloqueador ativo para P1 ou T9–T11._
+
+**Pausado (não bloqueia):** Google Sign-In UAT — erro `400: invalid_request` → ver `deferred-oauth.md`
 
 ---
 
@@ -94,6 +103,8 @@ _Nenhum bloqueador ativo._
 - [ ] Integração com calendário externo (Google Calendar) — Captured during: project init
 - [ ] Modo offline com sync — Captured during: project init
 - [ ] Compartilhamento de conquistas em redes sociais — Captured during: project init
+- [ ] Google Sign-In UAT (T7) — erro OAuth `400` no Expo Go — ver `.specs/features/authentication/deferred-oauth.md`
+- [ ] Apple Sign-In (T8) — não iniciado — retomar antes de release iOS com Google login
 - [ ] Husky + lint-staged pre-commit (T2b) — Captured during: scaffolding complete
 
 ---
@@ -107,7 +118,8 @@ _Nenhum bloqueador ativo._
 - [x] Especificar feature Authentication — `.specs/features/authentication/spec.md`
 - [x] Design feature Authentication — `.specs/features/authentication/design.md`
 - [x] Tasks feature Authentication — `.specs/features/authentication/tasks.md`
-- [ ] Implementar T1 Authentication — Prisma auth fields
+- [x] Implementar T1–T6 Authentication — P1 core auth completo
+- [ ] Implementar T9–T11 (refresh, CI, profile) — OAuth T7/T8 pausado
 
 ---
 

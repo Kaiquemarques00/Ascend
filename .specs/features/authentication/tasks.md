@@ -40,10 +40,12 @@ T1 ──→ T2 ──→ T3 ──→ T4 ──→ T5 ──→ T6
 ### Phase 2: P2 Enhancements
 
 ```
-              ┌──→ T7 Google [P] ──┐
-T6 ───────────├──→ T8 Apple [P] ───┼──→ T9 Refresh ──→ T11 Profile
-              └──→ T10 CI [P] ─────┘
+              ┌──→ T7 Google [P] ⏸ ──┐
+T6 ───────────├──→ T8 Apple [P] ⏸ ─┼──→ T9 Refresh ──→ T11 Profile
+              └──→ T10 CI [P] ───────┘
 ```
+
+> **T7/T8 pausados** (2026-06-30): Google com erro OAuth `400`; Apple não iniciado. Detalhes em [`deferred-oauth.md`](deferred-oauth.md). T9+ podem seguir sem OAuth.
 
 ### Phase 3: P3 (Deferred)
 
@@ -251,8 +253,9 @@ npm run build -w mobile
 
 ---
 
-### T7: Google Sign-In [P]
+### T7: Google Sign-In [P] — ⏸ ABERTO (UAT bloqueado)
 
+**Status:** Código implementado; UAT manual pausado — ver [`deferred-oauth.md`](deferred-oauth.md)  
 **What:** `POST /auth/google` na API + botão Google no mobile (`expo-auth-session`)  
 **Where:** `apps/api/src/auth/`, `apps/mobile/components/auth/SocialAuthButtons.tsx`, login/register screens  
 **Depends on:** T6  
@@ -263,12 +266,14 @@ npm run build -w mobile
 - Skill: NONE
 
 **Done when:**
-- [ ] API verifica Google ID token server-side (`GOOGLE_CLIENT_ID`)
-- [ ] Novo user: cria com `google_id`; existente: link by email ou login
-- [ ] Botão Google em login e register
-- [ ] Invalid token → 401
-- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
-- [ ] Manual: Google login em emulator/device (ou mock documentado)
+- [x] API verifica Google ID token server-side (`GOOGLE_CLIENT_ID`)
+- [x] Novo user: cria com `google_id`; existente: link by email ou login
+- [x] Botão Google em login e register
+- [x] Invalid token → 401
+- [x] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
+- [ ] Manual: Google login em emulator/device — **⏸ bloqueado** (`400: invalid_request` — ver `deferred-oauth.md`)
+
+**Blocked:** OAuth Google retorna `400: invalid_request` no Expo Go (redirect URI / Android client ID / SHA-1). Retomar quando configurar Google Cloud + Expo Go ou usar `expo run:android`.
 
 **Tests:** unit (API verify mock) + manual (OAuth flow)  
 **Gate:** quick + manual
@@ -283,8 +288,9 @@ npm run test -w api
 
 ---
 
-### T8: Apple Sign-In (iOS) [P]
+### T8: Apple Sign-In (iOS) [P] — ⏸ ADIADO (não iniciado)
 
+**Status:** Não iniciado — retomar depois — ver [`deferred-oauth.md`](deferred-oauth.md)  
 **What:** `POST /auth/apple` na API + botão Apple iOS-only (`expo-apple-authentication`)  
 **Where:** `apps/api/src/auth/`, `apps/mobile/components/auth/SocialAuthButtons.tsx`  
 **Depends on:** T6  
@@ -295,12 +301,14 @@ npm run test -w api
 - Skill: NONE
 
 **Done when:**
-- [ ] API verifica Apple identity token (`APPLE_*` env vars)
-- [ ] Novo user: `apple_id`; match by `apple_id` or email
-- [ ] Botão Apple visível só no iOS; oculto no Android
-- [ ] Invalid token → 401
-- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
-- [ ] Manual: Apple login iOS simulator (ou skip note se sem Apple Dev account)
+- [ ] API verifica Apple identity token (`APPLE_*` env vars) — **adiado**
+- [ ] Novo user: `apple_id`; match by `apple_id` or email — **adiado**
+- [ ] Botão Apple visível só no iOS; oculto no Android — **adiado**
+- [ ] Invalid token → 401 — **adiado**
+- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile` — **adiado**
+- [ ] Manual: Apple login iOS simulator — **adiado**
+
+**Deferred:** Pulado conscientemente; não bloqueia T9–T11. Obrigatório antes de release App Store com Google login.
 
 **Tests:** unit (API verify mock) + manual  
 **Gate:** quick + manual
@@ -319,7 +327,7 @@ npm run test -w api
 
 **What:** Model `RefreshToken`, migration, `POST /auth/refresh`, TTL access 15m, mobile auto-refresh  
 **Where:** `apps/api/prisma/`, `apps/api/src/auth/`, `apps/mobile/lib/auth-storage.ts`, `apps/mobile/providers/AuthProvider.tsx`  
-**Depends on:** T6, T7, T8  
+**Depends on:** T6 (T7/T8 opcionais — OAuth adiado; ver `deferred-oauth.md`)  
 **Reuses:** AuthService, SecureStore (refresh token key)  
 **Requirements:** AUTH-40–43
 
@@ -511,14 +519,14 @@ Phase 2 (after T6):
 
 | Task | Status | Commit | Notes |
 | ---- | ------ | ------ | ----- |
-| T1 | Pending | — | Prisma auth fields |
-| T2 | Pending | — | JWT env validation |
-| T3 | Pending | — | AuthModule + unit tests |
-| T4 | Pending | — | Mobile auth lib |
-| T5 | Pending | — | Login/register UI |
-| T6 | Pending | — | AuthProvider + routing |
-| T7 | Pending | — | Google OAuth [P] |
-| T8 | Pending | — | Apple OAuth [P] |
+| T1 | Done | — | Prisma auth fields |
+| T2 | Done | — | JWT env validation |
+| T3 | Done | — | AuthModule + unit tests |
+| T4 | Done | — | Mobile auth lib |
+| T5 | Done | — | Login/register UI |
+| T6 | Done | — | AuthProvider + routing (Stack.Protected) |
+| T7 | **Open** | — | Google OAuth — código OK, UAT bloqueado (`400`) → `deferred-oauth.md` |
+| T8 | **Deferred** | — | Apple OAuth — não iniciado → `deferred-oauth.md` |
 | T9 | Pending | — | Refresh tokens |
 | T10 | Pending | — | CI JWT stub [P] |
 | T11 | Pending | — | Profile PATCH |
@@ -539,7 +547,7 @@ Phase 2 (after T6):
 
 ## Success Criteria (from spec)
 
-- [ ] P1 complete (T1–T6): register/login/me/logout/perfil + session persist
-- [ ] P2 complete (T7–T11): OAuth + refresh + profile edit + CI
+- [x] P1 complete (T1–T6): register/login/me/logout/perfil + session persist
+- [ ] P2 complete (T7–T11): OAuth + refresh + profile edit + CI — **T7/T8 OAuth pausados** (ver `deferred-oauth.md`)
 - [ ] `npm run test -w api` green with auth tests
 - [ ] Manual UAT checklist passes (see T6 Verify)

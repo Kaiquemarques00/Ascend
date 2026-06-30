@@ -6,18 +6,22 @@
   "scripts": {
     "dev": "expo start",
     "build": "expo export --platform web",
-    "lint": "echo \"mobile lint: not configured yet\""
+    "lint": "echo \"mobile lint: not configured yet\"",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
     "@tanstack/react-query": "^5.101.1",
     "expo": "~54.0.0",
+    "expo-auth-session": "~7.0.11",
     "expo-constants": "~18.0.13",
     "expo-linking": "~8.0.12",
     "expo-router": "~6.0.24",
     "expo-secure-store": "~15.0.8",
     "expo-splash-screen": "~31.0.13",
     "expo-status-bar": "~3.0.9",
+    "expo-web-browser": "~15.0.11",
     "nativewind": "^4.2.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",

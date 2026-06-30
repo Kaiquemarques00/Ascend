@@ -20,3 +20,11 @@ export function login(params: LoginParams): Promise<AuthSession> {
 export function getMe(token: string): Promise<AuthUser> {
   return apiFetch<AuthUser>('/auth/me', { token });
 }
+
+export function loginGoogle(params: { idToken: string }): Promise<AuthSession> {
+  return apiFetch<AuthSession>('/auth/google', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+}

@@ -32,6 +32,12 @@ export class AuthController {
     return this.authService.login(body);
   }
 
+  @Public()
+  @Post('google')
+  loginWithGoogle(@Body() body: unknown): Promise<AuthResponseDto> {
+    return this.authService.loginWithGoogle(body);
+  }
+
   @Get('me')
   async me(@CurrentUser() user: AuthenticatedUser): Promise<AuthUserDto> {
     const found = await this.authService.validateUser(user.id);

@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
+import { GoogleAuthService } from './google/google-auth.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 describe('AuthService', () => {
@@ -19,6 +20,7 @@ describe('AuthService', () => {
     };
   };
   let jwtService: { sign: jest.Mock };
+  let googleAuthService: { verifyIdToken: jest.Mock };
 
   const mockUser = {
     id: 'user-uuid-1',
@@ -36,6 +38,7 @@ describe('AuthService', () => {
       user: {
         findUnique: jest.fn(),
         create: jest.fn(),
+        update: jest.fn(),
       },
     };
 
@@ -43,11 +46,16 @@ describe('AuthService', () => {
       sign: jest.fn().mockReturnValue('signed-jwt-token'),
     };
 
+    googleAuthService = {
+      verifyIdToken: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
         { provide: PrismaService, useValue: prisma },
         { provide: JwtService, useValue: jwtService },
+        { provide: GoogleAuthService, useValue: googleAuthService },
         {
           provide: ConfigService,
           useValue: {
@@ -168,5 +176,85 @@ describe('AuthService', () => {
 
     expect(hash).toMatch(/^\$2b\$/);
     expect(await bcrypt.compare('Test1234', hash)).toBe(true);
+  });
+
+  it('creates a new user from a valid Google ID token', async () => {
+    googleAuthService.verifyIdToken.mockResolvedValue({
+      sub: 'google-sub-123',
+      email: 'google@ascend.dev',
+      name: 'Google User',
+    });
+    prisma.user.findUnique.mockResolvedValueOnce(null).mockResolvedValueOnce(null);
+    prisma.user.create.mockResolvedValue({
+      ...mockUser,
+      email: 'google@ascend.dev',
+      name: 'Google User',
+      googleId: 'google-sub-123',
+      passwordHash: null,
+    });
+
+    const result = await service.loginWithGoogle({ idToken: 'valid-google-token' });
+
+    expect(result.accessToken).toBe('signed-jwt-token');
+    expect(prisma.user.create).toHaveBeenCalledWith({
+      data: {
+        name: 'Google User',
+        email: 'google@ascend.dev',
+        googleId: 'google-sub-123',
+      },
+    });
+  });
+
+  it('links Google account to an existing user by email', async () => {
+    googleAuthService.verifyIdToken.mockResolvedValue({
+      sub: 'google-sub-123',
+      email: 'test@ascend.dev',
+      name: 'Google User',
+    });
+    prisma.user.findUnique.mockResolvedValueOnce(null).mockResolvedValueOnce(mockUser);
+    prisma.user.update.mockResolvedValue({
+      ...mockUser,
+      googleId: 'google-sub-123',
+    });
+
+    const result = await service.loginWithGoogle({ idToken: 'valid-google-token' });
+
+    expect(result.accessToken).toBe('signed-jwt-token');
+    expect(prisma.user.update).toHaveBeenCalledWith({
+      where: { id: mockUser.id },
+      data: {
+        googleId: 'google-sub-123',
+        name: mockUser.name,
+      },
+    });
+  });
+
+  it('logs in an existing Google user', async () => {
+    googleAuthService.verifyIdToken.mockResolvedValue({
+      sub: 'google-sub-123',
+      email: 'google@ascend.dev',
+      name: 'Google User',
+    });
+    prisma.user.findUnique.mockResolvedValueOnce({
+      ...mockUser,
+      googleId: 'google-sub-123',
+      passwordHash: null,
+    });
+
+    const result = await service.loginWithGoogle({ idToken: 'valid-google-token' });
+
+    expect(result.accessToken).toBe('signed-jwt-token');
+    expect(prisma.user.create).not.toHaveBeenCalled();
+    expect(prisma.user.update).not.toHaveBeenCalled();
+  });
+
+  it('throws UnauthorizedException when Google token verification fails', async () => {
+    googleAuthService.verifyIdToken.mockRejectedValue(
+      new UnauthorizedException('Invalid Google token'),
+    );
+
+    await expect(service.loginWithGoogle({ idToken: 'invalid-token' })).rejects.toThrow(
+      new UnauthorizedException('Invalid Google token'),
+    );
   });
 });
