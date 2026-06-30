@@ -25,7 +25,7 @@
 
 - Registro e login por email
 - JWT session management
-- Google e Apple login (OAuth)
+- Google e Apple login (OAuth) — **em breve**
 - Perfil de usuário (`users`)
 
 ---

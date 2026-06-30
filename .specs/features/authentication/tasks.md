@@ -45,7 +45,7 @@ T6 ───────────├──→ T8 Apple [P] ⏸ ─┼──�
               └──→ T10 CI [P] ───────┘
 ```
 
-> **T7/T8 pausados** (2026-06-30): Google com erro OAuth `400`; Apple não iniciado. Detalhes em [`deferred-oauth.md`](deferred-oauth.md). T9+ podem seguir sem OAuth.
+> **T7/T8 adiados** (2026-06-30): Login com Google e Apple **serão adicionados em breve**. UI mostra placeholder; código OAuth removido. Detalhes em [`deferred-oauth.md`](deferred-oauth.md). T9+ não dependem de OAuth.
 
 ### Phase 3: P3 (Deferred)
 
@@ -253,27 +253,27 @@ npm run build -w mobile
 
 ---
 
-### T7: Google Sign-In [P] — ⏸ ABERTO (UAT bloqueado)
+### T7: Google Sign-In [P] — ⏸ EM BREVE
 
-**Status:** Código implementado; UAT manual pausado — ver [`deferred-oauth.md`](deferred-oauth.md)  
-**What:** `POST /auth/google` na API + botão Google no mobile (`expo-auth-session`)  
-**Where:** `apps/api/src/auth/`, `apps/mobile/components/auth/SocialAuthButtons.tsx`, login/register screens  
+**Status:** Adiado — será adicionado em breve — ver [`deferred-oauth.md`](deferred-oauth.md)  
+**What:** `POST /auth/google` na API + botão Google no mobile  
+**Where:** `apps/api/src/auth/`, `apps/mobile/components/auth/`, login/register screens  
 **Depends on:** T6  
-**Reuses:** `AuthService.issueTokens`, `google-auth-library`  
+**Reuses:** `AuthService.issueTokens`, verificação server-side do ID token  
 **Requirements:** AUTH-30–34
 
 **Tools:**
 - Skill: NONE
 
 **Done when:**
-- [x] API verifica Google ID token server-side (`GOOGLE_CLIENT_ID`)
-- [x] Novo user: cria com `google_id`; existente: link by email ou login
-- [x] Botão Google em login e register
-- [x] Invalid token → 401
-- [x] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
-- [ ] Manual: Google login em emulator/device — **⏸ bloqueado** (`400: invalid_request` — ver `deferred-oauth.md`)
+- [ ] API verifica Google ID token server-side
+- [ ] Novo user: cria com `google_id`; existente: link by email ou login
+- [ ] Botão Google em login e register (substituir `SocialAuthComingSoon`)
+- [ ] Invalid token → 401
+- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
+- [ ] Manual: Google login em emulator/device
 
-**Blocked:** OAuth Google retorna `400: invalid_request` no Expo Go (redirect URI / Android client ID / SHA-1). Retomar quando configurar Google Cloud + Expo Go ou usar `expo run:android`.
+**UI atual:** placeholder "Login com Google e Apple — em breve" (`SocialAuthComingSoon.tsx`)
 
 **Tests:** unit (API verify mock) + manual (OAuth flow)  
 **Gate:** quick + manual
@@ -288,11 +288,11 @@ npm run test -w api
 
 ---
 
-### T8: Apple Sign-In (iOS) [P] — ⏸ ADIADO (não iniciado)
+### T8: Apple Sign-In (iOS) [P] — ⏸ EM BREVE
 
-**Status:** Não iniciado — retomar depois — ver [`deferred-oauth.md`](deferred-oauth.md)  
+**Status:** Adiado — será adicionado em breve — ver [`deferred-oauth.md`](deferred-oauth.md)  
 **What:** `POST /auth/apple` na API + botão Apple iOS-only (`expo-apple-authentication`)  
-**Where:** `apps/api/src/auth/`, `apps/mobile/components/auth/SocialAuthButtons.tsx`  
+**Where:** `apps/api/src/auth/`, `apps/mobile/components/auth/`, login/register screens  
 **Depends on:** T6  
 **Reuses:** Apple JWKS verify, `AuthService.issueTokens`  
 **Requirements:** AUTH-35–39
@@ -301,14 +301,16 @@ npm run test -w api
 - Skill: NONE
 
 **Done when:**
-- [ ] API verifica Apple identity token (`APPLE_*` env vars) — **adiado**
-- [ ] Novo user: `apple_id`; match by `apple_id` or email — **adiado**
-- [ ] Botão Apple visível só no iOS; oculto no Android — **adiado**
-- [ ] Invalid token → 401 — **adiado**
-- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile` — **adiado**
-- [ ] Manual: Apple login iOS simulator — **adiado**
+- [ ] API verifica Apple identity token (`APPLE_*` env vars)
+- [ ] Novo user: `apple_id`; match by `apple_id` or email
+- [ ] Botão Apple visível só no iOS; oculto no Android
+- [ ] Invalid token → 401
+- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
+- [ ] Manual: Apple login iOS simulator
 
-**Deferred:** Pulado conscientemente; não bloqueia T9–T11. Obrigatório antes de release App Store com Google login.
+**UI atual:** mesmo placeholder que T7 (`SocialAuthComingSoon.tsx`)
+
+**Deferred:** Não bloqueia T9–T11. Obrigatório antes de release App Store com Google login.
 
 **Tests:** unit (API verify mock) + manual  
 **Gate:** quick + manual
@@ -525,8 +527,8 @@ Phase 2 (after T6):
 | T4 | Done | — | Mobile auth lib |
 | T5 | Done | — | Login/register UI |
 | T6 | Done | — | AuthProvider + routing (Stack.Protected) |
-| T7 | **Open** | — | Google OAuth — código OK, UAT bloqueado (`400`) → `deferred-oauth.md` |
-| T8 | **Deferred** | — | Apple OAuth — não iniciado → `deferred-oauth.md` |
+| T7 | **Deferred** | — | Google Sign-In — **em breve** → `deferred-oauth.md` |
+| T8 | **Deferred** | — | Apple Sign-In — **em breve** → `deferred-oauth.md` |
 | T9 | Done | — | Refresh tokens + rotation |
 | T10 | Done | — | CI JWT stub + test step no job `api` |
 | T11 | Done | — | Profile PATCH /auth/me + Perfil editável |

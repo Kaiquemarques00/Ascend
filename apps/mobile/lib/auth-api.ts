@@ -36,15 +36,6 @@ export function updateProfile(token: string, params: UpdateProfileParams): Promi
   });
 }
 
-export function loginGoogle(params: { idToken: string }): Promise<AuthSession> {
-  return apiFetch<AuthSession>('/auth/google', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(params),
-    retryOnUnauthorized: false,
-  });
-}
-
 export function logout(refreshToken: string, accessToken?: string | null): Promise<void> {
   return apiFetch<void>('/auth/logout', {
     method: 'POST',

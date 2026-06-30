@@ -536,11 +536,11 @@ PostgreSQL
 
 JWT
 
-Google Login
-
-Apple Login
-
 Email Login
+
+Google Login — em breve
+
+Apple Login — em breve
 
 ---
 

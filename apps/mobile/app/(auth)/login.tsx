@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 import { AuthButton } from '@/components/auth/AuthButton';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { AuthScreen } from '@/components/auth/AuthScreen';
-import { SocialAuthButtons } from '@/components/auth/SocialAuthButtons';
+import { SocialAuthComingSoon } from '@/components/auth/SocialAuthComingSoon';
 import { ApiError } from '@/lib/api';
 import { useAuth } from '@/providers/AuthProvider';
 
@@ -57,7 +57,7 @@ export default function LoginScreen() {
 
       <AuthButton label="Entrar" loading={loading} onPress={handleSubmit} />
 
-      <SocialAuthButtons disabled={loading} onError={setError} />
+      <SocialAuthComingSoon />
 
       <View className="mt-6 flex-row justify-center">
         <Text className="text-sm text-slate-400">Não tem conta? </Text>

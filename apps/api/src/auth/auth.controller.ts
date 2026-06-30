@@ -34,12 +34,6 @@ export class AuthController {
   }
 
   @Public()
-  @Post('google')
-  loginWithGoogle(@Body() body: unknown): Promise<AuthResponseDto> {
-    return this.authService.loginWithGoogle(body);
-  }
-
-  @Public()
   @Post('refresh')
   refresh(@Body() body: unknown): Promise<AuthResponseDto> {
     return this.authService.refresh(body);

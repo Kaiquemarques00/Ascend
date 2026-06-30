@@ -6,7 +6,6 @@ import type { EnvConfig } from '../config/env.validation';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { GoogleAuthService } from './google/google-auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
@@ -25,7 +24,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     PrismaModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleAuthService, JwtStrategy, JwtAuthGuard],
+  providers: [AuthService, JwtStrategy, JwtAuthGuard],
   exports: [AuthService, JwtModule, JwtAuthGuard],
 })
 export class AuthModule {}

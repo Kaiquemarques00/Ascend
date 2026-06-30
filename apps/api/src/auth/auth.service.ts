@@ -12,13 +12,11 @@ import { z } from 'zod';
 import type { EnvConfig } from '../config/env.validation';
 import { PrismaService } from '../prisma/prisma.service';
 import type { AuthResponseDto, AuthUserDto, JwtPayload } from './auth.types';
-import { GoogleAuthService } from './google/google-auth.service';
 import {
   expiresAtFromDuration,
   generateRefreshToken,
   hashRefreshToken,
 } from './refresh/refresh-token.util';
-import { googleAuthSchema } from './schemas/google-auth.schema';
 import { loginSchema, type LoginInput } from './schemas/login.schema';
 import { refreshSchema } from './schemas/refresh.schema';
 import { registerSchema, type RegisterInput } from './schemas/register.schema';
@@ -32,7 +30,6 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService<EnvConfig, true>,
-    private readonly googleAuthService: GoogleAuthService,
   ) {}
 
   async register(input: unknown): Promise<AuthResponseDto> {
@@ -71,7 +68,7 @@ export class AuthService {
     }
 
     if (!user.passwordHash) {
-      throw new UnauthorizedException('Use Google or Apple to sign in');
+      throw new UnauthorizedException('This account uses social sign-in, which is not available yet');
     }
 
     const passwordValid = await bcrypt.compare(dto.password, user.passwordHash);
@@ -81,54 +78,6 @@ export class AuthService {
     }
 
     return this.issueTokens(user);
-  }
-
-  async loginWithGoogle(input: unknown): Promise<AuthResponseDto> {
-    const parsed = googleAuthSchema.safeParse(input);
-
-    if (!parsed.success) {
-      throw new BadRequestException(this.formatZodError(parsed.error));
-    }
-
-    const profile = await this.googleAuthService.verifyIdToken(parsed.data.idToken);
-
-    const existingByGoogleId = await this.prisma.user.findUnique({
-      where: { googleId: profile.sub },
-    });
-
-    if (existingByGoogleId) {
-      return this.issueTokens(existingByGoogleId);
-    }
-
-    const existingByEmail = await this.prisma.user.findUnique({
-      where: { email: profile.email },
-    });
-
-    if (existingByEmail) {
-      if (existingByEmail.googleId && existingByEmail.googleId !== profile.sub) {
-        throw new UnauthorizedException('Invalid Google token');
-      }
-
-      const linkedUser = await this.prisma.user.update({
-        where: { id: existingByEmail.id },
-        data: {
-          googleId: profile.sub,
-          name: existingByEmail.name || profile.name,
-        },
-      });
-
-      return this.issueTokens(linkedUser);
-    }
-
-    const newUser = await this.prisma.user.create({
-      data: {
-        name: profile.name,
-        email: profile.email,
-        googleId: profile.sub,
-      },
-    });
-
-    return this.issueTokens(newUser);
   }
 
   async refresh(input: unknown): Promise<AuthResponseDto> {

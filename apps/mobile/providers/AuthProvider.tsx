@@ -12,7 +12,6 @@ import { refreshSession } from '@/lib/auth-refresh';
 import {
   getMe,
   login as loginApi,
-  loginGoogle as loginGoogleApi,
   logout as logoutApi,
   register as registerApi,
   updateProfile as updateProfileApi,
@@ -37,7 +36,6 @@ interface AuthContextValue {
   isAuthenticated: boolean;
   signIn: (params: LoginParams) => Promise<void>;
   signUp: (params: RegisterParams) => Promise<void>;
-  signInWithGoogle: (idToken: string) => Promise<void>;
   signOut: () => Promise<void>;
   updateProfile: (params: UpdateProfileParams) => Promise<void>;
 }
@@ -128,14 +126,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [applySession],
   );
 
-  const signInWithGoogle = useCallback(
-    async (idToken: string) => {
-      const session = await loginGoogleApi({ idToken });
-      await applySession(session);
-    },
-    [applySession],
-  );
-
   const signOut = useCallback(async () => {
     const refreshToken = await getRefreshToken();
     const accessToken = await getAccessToken();
@@ -171,7 +161,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: user !== null,
         signIn,
         signUp,
-        signInWithGoogle,
         signOut,
         updateProfile,
       }}

@@ -58,18 +58,18 @@
 
 ### AD-008: OAuth Google/Apple adiado (2026-06-30)
 
-**Decision:** Pausar UAT do Google Sign-In (T7) e adiar Apple Sign-In (T8); seguir com T9–T11 sem OAuth
-**Reason:** Google OAuth retorna `400: invalid_request` no Expo Go (config redirect URI / client IDs / SHA-1); Apple requer Apple Dev account e tempo extra
+**Decision:** Remover implementação parcial do Google Sign-In; adiar Google (T7) e Apple (T8); UI com placeholder "em breve"
+**Reason:** Config OAuth complexa (Google Cloud, SHA-1, development builds); priorizar fluxo email/senha estável
 **Trade-off:** P2 OAuth incompleto até retomar; login email/senha + sessão permanecem MVP
-**Impact:** Documentado em `.specs/features/authentication/deferred-oauth.md`; T9 não bloqueado por OAuth
+**Impact:** Documentado em `.specs/features/authentication/deferred-oauth.md`; T9–T11 concluídos sem OAuth
 
 ---
 
 ## Active Blockers
 
-_Nenhum bloqueador ativo para P1 ou T9–T11._
+_Nenhum bloqueador ativo._
 
-**Pausado (não bloqueia):** Google Sign-In UAT — erro `400: invalid_request` → ver `deferred-oauth.md`
+**Em breve (não bloqueia):** Google Sign-In (T7) e Apple Sign-In (T8) — ver `deferred-oauth.md`
 
 ---
 
@@ -103,8 +103,8 @@ _Nenhum bloqueador ativo para P1 ou T9–T11._
 - [ ] Integração com calendário externo (Google Calendar) — Captured during: project init
 - [ ] Modo offline com sync — Captured during: project init
 - [ ] Compartilhamento de conquistas em redes sociais — Captured during: project init
-- [ ] Google Sign-In UAT (T7) — erro OAuth `400` no Expo Go — ver `.specs/features/authentication/deferred-oauth.md`
-- [ ] Apple Sign-In (T8) — não iniciado — retomar antes de release iOS com Google login
+- [ ] Google Sign-In (T7) — **em breve** — ver `.specs/features/authentication/deferred-oauth.md`
+- [ ] Apple Sign-In (T8) — **em breve** — retomar antes de release iOS com login social
 - [ ] Husky + lint-staged pre-commit (T2b) — Captured during: scaffolding complete
 
 ---

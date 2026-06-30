@@ -147,7 +147,9 @@ Explicitamente excluído desta feature.
 
 ---
 
-### P2: Google Sign-In
+### P2: Google Sign-In — **em breve**
+
+**Status:** Adiado. UI mostra placeholder; implementação será adicionada em breve. Ver `deferred-oauth.md`.
 
 **User Story**: As a user, I want to sign in with Google so that I can access ASCEND without creating a password.
 
@@ -165,7 +167,9 @@ Explicitamente excluído desta feature.
 
 ---
 
-### P2: Apple Sign-In
+### P2: Apple Sign-In — **em breve**
+
+**Status:** Adiado. Será adicionado em breve junto com Google. Ver `deferred-oauth.md`.
 
 **User Story**: As an iOS user, I want to sign in with Apple so that I can register quickly with privacy options.
 

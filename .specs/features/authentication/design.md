@@ -126,8 +126,8 @@ app/
 | Refresh storage | **DB table** `refresh_tokens` (hash SHA-256) + **SecureStore** no mobile | Rotação one-time; revogável | AUTH-40–43 |
 | Logout (P1) | **Client-only** | JWT stateless; limpar SecureStore + cache | AUTH-26–28 |
 | OAuth account linking | **Auto-merge by email** | Google email verificado → popula `google_id` em user existente | AUTH-30–34 |
-| OAuth mobile (P2) | `expo-auth-session` (Google) + `expo-apple-authentication` (iOS) | Stack Expo nativo SDK 54 | AUTH-30–39 |
-| OAuth verify (P2) | `google-auth-library` + Apple JWKS verify na API | Nunca confiar só no client | AUTH-30–39 |
+| OAuth mobile (P2) | **Em breve** — SDK nativo Google + `expo-apple-authentication` (iOS) | Adiado; UI placeholder `SocialAuthComingSoon` | AUTH-30–39 |
+| OAuth verify (P2) | **Em breve** — verificação server-side na API | Nunca confiar só no client | AUTH-30–39 |
 | Navigation guard | **AuthProvider** + `app/index.tsx` redirect | Simples; sem middleware Expo experimental | AUTH-16–20 |
 | Global guard | **Opt-in per controller** + `@Public()` decorator | Health/auth públicos explícitos; M2 copia padrão | AUTH-21–25 |
 
@@ -229,8 +229,8 @@ export interface AuthSession { accessToken: string; refreshToken?: string; user:
 | `issueTokens(user)` | Sign JWT access (+ refresh P2) |
 | `refresh(refreshToken)` | P2: hash lookup, rotate, new pair |
 | `updateProfile(userId, name)` | P2: PATCH name |
-| `loginWithGoogle(idToken)` | P2: verify + find/create/link |
-| `loginWithApple(idToken)` | P2: verify + find/create/link |
+| `loginWithGoogle(idToken)` | P2 (**em breve**): verify + find/create/link |
+| `loginWithApple(idToken)` | P2 (**em breve**): verify + find/create/link |
 
 - **Reuses:** `PrismaService`, `JwtService`, `ConfigService`
 
@@ -244,8 +244,8 @@ export interface AuthSession { accessToken: string; refreshToken?: string; user:
 | POST | `/auth/login` | `@Public()` | `{ email, password }` | `200 AuthResponseDto` | P1 |
 | GET | `/auth/me` | `JwtAuthGuard` | — | `200 AuthUserDto` | P1 |
 | POST | `/auth/logout` | `JwtAuthGuard` | — | `204` (no-op P1) | P1 |
-| POST | `/auth/google` | `@Public()` | `{ idToken }` | `200 AuthResponseDto` | P2 |
-| POST | `/auth/apple` | `@Public()` | `{ idToken }` | `200 AuthResponseDto` | P2 |
+| POST | `/auth/google` | `@Public()` | `{ idToken }` | `200 AuthResponseDto` | P2 (**em breve**) |
+| POST | `/auth/apple` | `@Public()` | `{ idToken }` | `200 AuthResponseDto` | P2 (**em breve**) |
 | POST | `/auth/refresh` | `@Public()` | `{ refreshToken }` | `200 AuthResponseDto` | P2 |
 | PATCH | `/auth/me` | `JwtAuthGuard` | `{ name }` | `200 AuthUserDto` | P2 |
 
@@ -288,14 +288,8 @@ Pipe custom `ZodValidationPipe` ou validação inline no controller — reutiliz
 JWT_SECRET: z.string().min(32),
 JWT_ACCESS_EXPIRES_IN: z.string().default('7d'),
 
-// P2 — optional until OAuth/refresh tasks
-JWT_REFRESH_EXPIRES_IN: z.string().default('7d').optional(),
-GOOGLE_CLIENT_ID: z.string().optional(),
-GOOGLE_CLIENT_IDS: z.string().optional(), // comma-separated (web, ios, android)
-APPLE_CLIENT_ID: z.string().optional(),
-APPLE_TEAM_ID: z.string().optional(),
-APPLE_KEY_ID: z.string().optional(),
-APPLE_PRIVATE_KEY: z.string().optional(), // base64 or PEM with \n escaped
+// P2 OAuth — optional when T7/T8 implemented
+// GOOGLE_CLIENT_ID, GOOGLE_CLIENT_IDS, APPLE_* — see deferred-oauth.md
 ```
 
 ---
@@ -314,7 +308,7 @@ APPLE_PRIVATE_KEY: z.string().optional(), // base64 or PEM with \n escaped
 - **Purpose:** Chamadas auth tipadas
 - **Location:** `apps/mobile/lib/auth-api.ts`
 - **Uses:** `apiFetch` estendido com `Authorization` header opcional
-- **Functions:** `register()`, `login()`, `getMe()`, `logout()` (P2: `refresh()`, `updateProfile()`, `loginGoogle()`, `loginApple()`)
+- **Functions:** `register()`, `login()`, `getMe()`, `logout()`, `updateProfile()` (P2 OAuth **em breve**: `loginGoogle()`, `loginApple()`)
 
 ### AuthProvider
 
@@ -344,7 +338,7 @@ export async function apiFetch<T>(
 | `AuthScreen` | `components/auth/AuthScreen.tsx` | Wrapper centrado, logo ASCEND + tagline |
 | `AuthInput` | `components/auth/AuthInput.tsx` | TextInput estilizado NativeWind |
 | `AuthButton` | `components/auth/AuthButton.tsx` | Primary CTA + loading state |
-| `SocialAuthButtons` | `components/auth/SocialAuthButtons.tsx` | P2: Google + Apple (iOS only) |
+| `SocialAuthComingSoon` | `components/auth/SocialAuthComingSoon.tsx` | Placeholder: "Login com Google e Apple — em breve" |
 
 **Visual (P1):** fundo `#0F172A`, inputs `bg-surface` (`#1E293B`), botão primary `#8B5CF6`, links `text-primary`. Reutilizar tagline "Consistência que transforma" no topo das telas auth.
 
@@ -364,7 +358,7 @@ export async function apiFetch<T>(
 | Email já registrado | `409` "Email already registered" | Mensagem abaixo do form |
 | Senha inválida no registro | `400` com regras Zod | Inline validation + API message |
 | Credenciais login inválidas | `401` "Invalid email or password" | Alert/texto genérico |
-| Conta OAuth-only no login email | `401` "Use Google or Apple to sign in" | Mostrar botões sociais (P2) |
+| Conta OAuth-only no login email | `401` "This account uses social sign-in, which is not available yet" | Placeholder social login (em breve) |
 | JWT ausente/expirado | `401` | Clear session → login (P2: tentar refresh 1x) |
 | `GET /auth/me` offline no boot | Network error | Retry 2x com backoff; depois login screen + "Sem conexão" |
 | Google/Apple token inválido | `401` | "Não foi possível entrar. Tente novamente." |
@@ -472,16 +466,16 @@ T6 ──────┤                                              ├──�
 | `bcrypt` | P1 |
 | `@types/bcrypt` | P1 |
 | `@types/passport-jwt` | P1 |
-| `google-auth-library` | P2 |
-| `apple-signin-auth` or `jwks-rsa` | P2 |
+| `google-auth-library` | P2 (**em breve**) |
+| `apple-signin-auth` or `jwks-rsa` | P2 (**em breve**) |
 
 ### Mobile (add to `apps/mobile/package.json`)
 
 | Package | Phase |
 | ------- | ----- |
 | `expo-secure-store` | P1 |
-| `expo-auth-session` | P2 |
-| `expo-apple-authentication` | P2 |
+| `expo-auth-session` or native Google SDK | P2 (**em breve**) |
+| `expo-apple-authentication` | P2 (**em breve**) |
 | `expo-crypto` | P2 (PKCE if needed) |
 
 ---

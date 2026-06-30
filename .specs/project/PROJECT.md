@@ -23,7 +23,7 @@
 - Mobile: React Native + Expo (TypeScript)
 - Backend: NestJS (TypeScript)
 - Database: PostgreSQL (Supabase)
-- Auth: JWT + Google, Apple e Email login
+- Auth: JWT + email/senha (Google e Apple login — em breve)
 - Styling: NativeWind
 - Data fetching: React Query
 
