@@ -21,7 +21,7 @@
 - CI básico e variáveis de ambiente documentadas
 - README de onboarding (`/README.md`)
 
-**Authentication** - PLANNED (next)
+**Authentication** - TASKS READY → [spec](../features/authentication/spec.md) · [design](../features/authentication/design.md) · [tasks](../features/authentication/tasks.md)
 
 - Registro e login por email
 - JWT session management

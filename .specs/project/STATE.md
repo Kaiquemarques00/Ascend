@@ -1,7 +1,7 @@
 # State
 
 **Last Updated:** 2026-06-25
-**Current Work:** M1 — Authentication (próxima feature após scaffolding completo)
+**Current Work:** M1 — Authentication (tasks ready → execute T1)
 
 ---
 
@@ -104,7 +104,10 @@ _Nenhum bloqueador ativo._
 - [x] Copiar/referenciar `interface.png` no repositório para acesso local
 - [x] Tasks scaffolding — `.specs/features/scaffolding/tasks.md` (12 tasks)
 - [x] Implementar T1–T12 — scaffolding completo e validado
-- [ ] Especificar feature Authentication — próximo passo M1
+- [x] Especificar feature Authentication — `.specs/features/authentication/spec.md`
+- [x] Design feature Authentication — `.specs/features/authentication/design.md`
+- [x] Tasks feature Authentication — `.specs/features/authentication/tasks.md`
+- [ ] Implementar T1 Authentication — Prisma auth fields
 
 ---
 
