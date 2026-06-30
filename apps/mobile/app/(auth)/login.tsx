@@ -6,10 +6,10 @@ import { AuthButton } from '@/components/auth/AuthButton';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { AuthScreen } from '@/components/auth/AuthScreen';
 import { ApiError } from '@/lib/api';
-import { login } from '@/lib/auth-api';
-import { setAccessToken } from '@/lib/auth-storage';
+import { useAuth } from '@/providers/AuthProvider';
 
 export default function LoginScreen() {
+  const { signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -20,8 +20,7 @@ export default function LoginScreen() {
     setLoading(true);
 
     try {
-      const session = await login({ email: email.trim(), password });
-      await setAccessToken(session.accessToken);
+      await signIn({ email: email.trim(), password });
     } catch (err) {
       const message =
         err instanceof ApiError ? err.message : 'Não foi possível entrar. Tente novamente.';

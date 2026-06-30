@@ -6,10 +6,10 @@ import { AuthButton } from '@/components/auth/AuthButton';
 import { AuthInput } from '@/components/auth/AuthInput';
 import { AuthScreen } from '@/components/auth/AuthScreen';
 import { ApiError } from '@/lib/api';
-import { register } from '@/lib/auth-api';
-import { setAccessToken } from '@/lib/auth-storage';
+import { useAuth } from '@/providers/AuthProvider';
 
 export default function RegisterScreen() {
+  const { signUp } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +21,7 @@ export default function RegisterScreen() {
     setLoading(true);
 
     try {
-      const session = await register({ name: name.trim(), email: email.trim(), password });
-      await setAccessToken(session.accessToken);
+      await signUp({ name: name.trim(), email: email.trim(), password });
     } catch (err) {
       const message =
         err instanceof ApiError ? err.message : 'Não foi possível criar a conta. Tente novamente.';

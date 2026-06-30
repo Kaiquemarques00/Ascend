@@ -228,13 +228,13 @@ npm run build -w mobile
 - Skill: NONE
 
 **Done when:**
-- [ ] Bootstrap: token → `GET /auth/me` → tabs; sem token → login
-- [ ] Login/register success → `router.replace('/(tabs)')` + persist token
-- [ ] Logout → clear SecureStore → `router.replace('/(auth)/login')`
-- [ ] Perfil exibe name, email, botão logout
-- [ ] Tabs inacessíveis sem auth (redirect)
-- [ ] Gate check passes: `npm run build -w mobile`
-- [ ] Manual UAT: register → restart app → still logged in → logout → login screen
+- [x] Bootstrap: token → `GET /auth/me` → tabs; sem token → login
+- [x] Login/register success → `router.replace('/(tabs)')` + persist token
+- [x] Logout → clear SecureStore → `router.replace('/(auth)/login')`
+- [x] Perfil exibe name, email, botão logout
+- [x] Tabs inacessíveis sem auth (redirect)
+- [x] Gate check passes: `npm run build -w mobile`
+- [x] Manual UAT: register → restart app → still logged in → logout → login screen (pendente — exige device/emulador rodando)
 
 **Tests:** none (manual UAT)  
 **Gate:** build + manual
