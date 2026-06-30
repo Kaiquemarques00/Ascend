@@ -8,8 +8,20 @@ import {
   type ReactNode,
 } from 'react';
 
-import { getMe, login as loginApi, loginGoogle as loginGoogleApi, register as registerApi } from '@/lib/auth-api';
-import { clearAccessToken, getAccessToken, setAccessToken } from '@/lib/auth-storage';
+import { refreshSession } from '@/lib/auth-refresh';
+import {
+  getMe,
+  login as loginApi,
+  loginGoogle as loginGoogleApi,
+  logout as logoutApi,
+  register as registerApi,
+} from '@/lib/auth-api';
+import {
+  clearSession,
+  getAccessToken,
+  getRefreshToken,
+  setSession,
+} from '@/lib/auth-storage';
 import type { AuthSession, AuthUser, LoginParams, RegisterParams } from '@/lib/auth.types';
 
 interface AuthContextValue {
@@ -41,17 +53,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     async function bootstrap() {
       try {
-        const token = await getAccessToken();
-        if (!token) {
+        let accessToken = await getAccessToken();
+
+        if (!accessToken) {
+          const refreshed = await refreshSession();
+          accessToken = refreshed?.accessToken ?? null;
+        }
+
+        if (!accessToken) {
           return;
         }
 
-        const me = await getMe(token);
+        const me = await getMe(accessToken);
         if (active) {
           setUser(me);
         }
       } catch {
-        await clearAccessToken();
+        const refreshed = await refreshSession();
+        if (refreshed && active) {
+          setUser(refreshed.user);
+          return;
+        }
+
+        await clearSession();
         if (active) {
           setUser(null);
         }
@@ -76,7 +100,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [isLoading]);
 
   const applySession = useCallback(async (session: AuthSession) => {
-    await setAccessToken(session.accessToken);
+    await setSession(session);
     setUser(session.user);
   }, []);
 
@@ -105,7 +129,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const signOut = useCallback(async () => {
-    await clearAccessToken();
+    const refreshToken = await getRefreshToken();
+    const accessToken = await getAccessToken();
+
+    if (refreshToken) {
+      try {
+        await logoutApi(refreshToken, accessToken);
+      } catch {
+        // Best-effort server revoke; always clear local session
+      }
+    }
+
+    await clearSession();
     setUser(null);
   }, []);
 

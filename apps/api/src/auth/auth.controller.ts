@@ -38,6 +38,12 @@ export class AuthController {
     return this.authService.loginWithGoogle(body);
   }
 
+  @Public()
+  @Post('refresh')
+  refresh(@Body() body: unknown): Promise<AuthResponseDto> {
+    return this.authService.refresh(body);
+  }
+
   @Get('me')
   async me(@CurrentUser() user: AuthenticatedUser): Promise<AuthUserDto> {
     const found = await this.authService.validateUser(user.id);
@@ -51,7 +57,7 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
-  logout(): void {
-    // P1: client-only logout — JWT is stateless
+  logout(@Body() body: unknown): Promise<void> {
+    return this.authService.logout(body);
   }
 }

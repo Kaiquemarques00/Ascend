@@ -13,8 +13,14 @@ import type { EnvConfig } from '../config/env.validation';
 import { PrismaService } from '../prisma/prisma.service';
 import type { AuthResponseDto, AuthUserDto, JwtPayload } from './auth.types';
 import { GoogleAuthService } from './google/google-auth.service';
+import {
+  expiresAtFromDuration,
+  generateRefreshToken,
+  hashRefreshToken,
+} from './refresh/refresh-token.util';
 import { googleAuthSchema } from './schemas/google-auth.schema';
 import { loginSchema, type LoginInput } from './schemas/login.schema';
+import { refreshSchema } from './schemas/refresh.schema';
 import { registerSchema, type RegisterInput } from './schemas/register.schema';
 
 const BCRYPT_COST = 12;
@@ -124,6 +130,42 @@ export class AuthService {
     return this.issueTokens(newUser);
   }
 
+  async refresh(input: unknown): Promise<AuthResponseDto> {
+    const parsed = refreshSchema.safeParse(input);
+
+    if (!parsed.success) {
+      throw new BadRequestException(this.formatZodError(parsed.error));
+    }
+
+    const tokenHash = hashRefreshToken(parsed.data.refreshToken);
+    const stored = await this.prisma.refreshToken.findFirst({
+      where: { tokenHash },
+      include: { user: true },
+    });
+
+    if (!stored || stored.expiresAt < new Date()) {
+      if (stored) {
+        await this.prisma.refreshToken.delete({ where: { id: stored.id } });
+      }
+
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+
+    await this.prisma.refreshToken.delete({ where: { id: stored.id } });
+
+    return this.issueTokens(stored.user);
+  }
+
+  async logout(input: unknown): Promise<void> {
+    const parsed = refreshSchema.safeParse(input);
+
+    if (!parsed.success) {
+      return;
+    }
+
+    await this.revokeRefreshToken(parsed.data.refreshToken);
+  }
+
   async validateUser(userId: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { id: userId } });
   }
@@ -141,7 +183,7 @@ export class AuthService {
     return bcrypt.hash(password, BCRYPT_COST);
   }
 
-  issueTokens(user: User): AuthResponseDto {
+  async issueTokens(user: User): Promise<AuthResponseDto> {
     const payload: JwtPayload = {
       sub: user.id,
       email: user.email,
@@ -152,10 +194,30 @@ export class AuthService {
       expiresIn: this.configService.get('JWT_ACCESS_EXPIRES_IN', { infer: true }),
     });
 
+    const refreshToken = generateRefreshToken();
+    const tokenHash = hashRefreshToken(refreshToken);
+    const expiresAt = expiresAtFromDuration(
+      this.configService.get('JWT_REFRESH_EXPIRES_IN', { infer: true }),
+    );
+
+    await this.prisma.refreshToken.create({
+      data: {
+        userId: user.id,
+        tokenHash,
+        expiresAt,
+      },
+    });
+
     return {
       accessToken,
+      refreshToken,
       user: this.toAuthUserDto(user),
     };
+  }
+
+  private async revokeRefreshToken(refreshToken: string): Promise<void> {
+    const tokenHash = hashRefreshToken(refreshToken);
+    await this.prisma.refreshToken.deleteMany({ where: { tokenHash } });
   }
 
   private parseRegister(input: unknown): RegisterInput {

@@ -1,7 +1,7 @@
 # State
 
 **Last Updated:** 2026-06-30
-**Current Work:** M1 — Authentication P1 complete; P2 OAuth (T7/T8) pausado → próximo: T9 Refresh ou T10 CI
+**Current Work:** M1 — Authentication T9 complete; próximo: T10 CI ou retomar OAuth (T7/T8)
 
 ---
 

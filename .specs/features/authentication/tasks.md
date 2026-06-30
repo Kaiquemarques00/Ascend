@@ -336,14 +336,14 @@ npm run test -w api
 - Skill: `supabase`
 
 **Done when:**
-- [ ] Migration `add_refresh_tokens` com hash SHA-256 (não plaintext)
-- [ ] Login/register/OAuth retornam `{ accessToken, refreshToken, user }`
-- [ ] `JWT_ACCESS_EXPIRES_IN` default → `15m`; `JWT_REFRESH_EXPIRES_IN` → `7d`
-- [ ] `POST /auth/refresh` rotaciona token (one-time use)
-- [ ] Mobile: on 401 tenta refresh 1x antes de logout
-- [ ] Logout revoga refresh token na DB (P2 enhancement)
-- [ ] Unit tests: refresh valid, expired, rotated
-- [ ] Gate check passes: `npm run test -w api`
+- [x] Migration `add_refresh_tokens` com hash SHA-256 (não plaintext)
+- [x] Login/register/OAuth retornam `{ accessToken, refreshToken, user }`
+- [x] `JWT_ACCESS_EXPIRES_IN` default → `15m`; `JWT_REFRESH_EXPIRES_IN` → `7d`
+- [x] `POST /auth/refresh` rotaciona token (one-time use)
+- [x] Mobile: on 401 tenta refresh 1x antes de logout
+- [x] Logout revoga refresh token na DB (P2 enhancement)
+- [x] Unit tests: refresh valid, expired, rotated
+- [x] Gate check passes: `npm run test -w api`
 
 **Tests:** unit  
 **Gate:** quick
@@ -527,7 +527,7 @@ Phase 2 (after T6):
 | T6 | Done | — | AuthProvider + routing (Stack.Protected) |
 | T7 | **Open** | — | Google OAuth — código OK, UAT bloqueado (`400`) → `deferred-oauth.md` |
 | T8 | **Deferred** | — | Apple OAuth — não iniciado → `deferred-oauth.md` |
-| T9 | Pending | — | Refresh tokens |
+| T9 | Done | — | Refresh tokens + rotation |
 | T10 | Pending | — | CI JWT stub [P] |
 | T11 | Pending | — | Profile PATCH |
 
