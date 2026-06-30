@@ -66,10 +66,10 @@ Password reset (AUTH-47–49) — fora do escopo deste tasks.md.
 - Skill: `supabase`
 
 **Done when:**
-- [ ] `User` tem `passwordHash`, `googleId`, `appleId` com `@map` snake_case
-- [ ] `google_id` e `apple_id` são `@unique` nullable
-- [ ] Migration aplicada localmente (`npm run db:migrate -w api`)
-- [ ] Gate check passes: `npm run db:generate -w api`
+- [x] `User` tem `passwordHash`, `googleId`, `appleId` com `@map` snake_case
+- [x] `google_id` e `apple_id` são `@unique` nullable
+- [x] Migration aplicada localmente (`npm run db:migrate -w api`)
+- [x] Gate check passes: `npm run db:generate -w api`
 
 **Tests:** none  
 **Gate:** build (`prisma generate`)
@@ -96,11 +96,11 @@ grep password_hash apps/api/prisma/schema.prisma
 - Skill: NONE
 
 **Done when:**
-- [ ] `JWT_SECRET` required, min 32 chars
-- [ ] `JWT_ACCESS_EXPIRES_IN` default `7d`
-- [ ] API falha no boot sem `JWT_SECRET` (mensagem clara)
-- [ ] `.env.example` documenta geração (`openssl rand -base64 32`)
-- [ ] Gate check passes: `npm run build -w api`
+- [x] `JWT_SECRET` required, min 32 chars
+- [x] `JWT_ACCESS_EXPIRES_IN` default `7d`
+- [x] API falha no boot sem `JWT_SECRET` (mensagem clara)
+- [x] `.env.example` documenta geração (`openssl rand -base64 32`)
+- [x] Gate check passes: `npm run build -w api`
 
 **Tests:** none  
 **Gate:** build
@@ -127,15 +127,15 @@ npm run build -w api
 - Skill: NONE
 
 **Done when:**
-- [ ] Deps: `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt`
-- [ ] `POST /auth/register` → 201 + `{ accessToken, user }`; duplicate email → 409; senha inválida → 400
-- [ ] `POST /auth/login` → 200 + token; credenciais inválidas → 401; OAuth-only → 401 com mensagem distinta
-- [ ] `GET /auth/me` → 200 com Bearer; sem token → 401
-- [ ] `JwtAuthGuard` + `@CurrentUser()` funcionam; `@Public()` em register/login
-- [ ] `GET /health` permanece público (sem auth)
-- [ ] Unit tests: register, login, hash, duplicate email, invalid credentials, OAuth-only account
-- [ ] Gate check passes: `npm run test -w api` + `npm run build -w api`
-- [ ] Test count: ≥6 auth tests pass (no silent deletions)
+- [x] Deps: `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt`
+- [x] `POST /auth/register` → 201 + `{ accessToken, user }`; duplicate email → 409; senha inválida → 400
+- [x] `POST /auth/login` → 200 + token; credenciais inválidas → 401; OAuth-only → 401 com mensagem distinta
+- [x] `GET /auth/me` → 200 com Bearer; sem token → 401
+- [x] `JwtAuthGuard` + `@CurrentUser()` funcionam; `@Public()` em register/login
+- [x] `GET /health` permanece público (sem auth)
+- [x] Unit tests: register, login, hash, duplicate email, invalid credentials, OAuth-only account
+- [x] Gate check passes: `npm run test -w api` + `npm run build -w api`
+- [x] Test count: ≥6 auth tests pass (no silent deletions)
 
 **Tests:** unit  
 **Gate:** quick
