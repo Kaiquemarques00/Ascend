@@ -167,11 +167,11 @@ curl -s http://localhost:3000/auth/me -H "Authorization: Bearer <token>" | jq .
 - Skill: NONE
 
 **Done when:**
-- [ ] `expo-secure-store` instalado
-- [ ] `auth-storage`: get/set/clear access token
-- [ ] `auth-api`: `register()`, `login()`, `getMe()` tipados
-- [ ] `apiFetch` aceita `token` option e parseia `{ statusCode, message }` em erros
-- [ ] Gate check passes: `npm run build -w mobile`
+- [x] `expo-secure-store` instalado
+- [x] `auth-storage`: get/set/clear access token
+- [x] `auth-api`: `register()`, `login()`, `getMe()` tipados
+- [x] `apiFetch` aceita `token` option e parseia `{ statusCode, message }` em erros
+- [x] Gate check passes: `npm run build -w mobile`
 
 **Tests:** none  
 **Gate:** build
