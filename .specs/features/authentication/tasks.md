@@ -197,11 +197,11 @@ npm run build -w mobile
 - Skill: NONE
 
 **Done when:**
-- [ ] Login: email, password, link para register, submit chama `login()`
-- [ ] Register: name, email, password, link para login, submit chama `register()`
-- [ ] Tema dark: background `#0F172A`, primary `#8B5CF6`, tagline ASCEND
-- [ ] Erros API exibidos inline (409, 400, 401)
-- [ ] Gate check passes: `npm run build -w mobile`
+- [x] Login: email, password, link para register, submit chama `login()`
+- [x] Register: name, email, password, link para login, submit chama `register()`
+- [x] Tema dark: background `#0F172A`, primary `#8B5CF6`, tagline ASCEND
+- [x] Erros API exibidos inline (409, 400, 401)
+- [x] Gate check passes: `npm run build -w mobile`
 
 **Tests:** none  
 **Gate:** build
