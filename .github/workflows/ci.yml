@@ -11,6 +11,7 @@ jobs:
     env:
       DATABASE_URL: postgresql://ci:ci@localhost:5432/ci?schema=public
       DIRECT_URL: postgresql://ci:ci@localhost:5432/ci?schema=public
+      JWT_SECRET: ci-jwt-secret-stub-not-for-production-0123456789
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +30,9 @@ jobs:
 
       - name: Build
         run: npm run build -w api
+
+      - name: Test
+        run: npm run test -w api
 
   mobile:
     name: mobile

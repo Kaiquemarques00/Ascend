@@ -370,9 +370,9 @@ npm run test -w api
 - Skill: NONE
 
 **Done when:**
-- [ ] Job `api` define `JWT_SECRET` env stub
-- [ ] `npm ci` + build + test passam no CI
-- [ ] Gate check passes: `npm run lint && npm run build` localmente
+- [x] Job `api` define `JWT_SECRET` env stub
+- [x] `npm ci` + build + test passam no CI (step de teste adicionado ao job `api`)
+- [x] Gate check passes: `npm run lint && npm run build` localmente
 
 **Tests:** none  
 **Gate:** build
@@ -528,7 +528,7 @@ Phase 2 (after T6):
 | T7 | **Open** | — | Google OAuth — código OK, UAT bloqueado (`400`) → `deferred-oauth.md` |
 | T8 | **Deferred** | — | Apple OAuth — não iniciado → `deferred-oauth.md` |
 | T9 | Done | — | Refresh tokens + rotation |
-| T10 | Pending | — | CI JWT stub [P] |
+| T10 | Done | — | CI JWT stub + test step no job `api` |
 | T11 | Pending | — | Profile PATCH |
 
 ---
