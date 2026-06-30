@@ -1,5 +1,11 @@
 import { apiFetch } from './api';
-import type { AuthSession, AuthUser, LoginParams, RegisterParams } from './auth.types';
+import type {
+  AuthSession,
+  AuthUser,
+  LoginParams,
+  RegisterParams,
+  UpdateProfileParams,
+} from './auth.types';
 
 export function register(params: RegisterParams): Promise<AuthSession> {
   return apiFetch<AuthSession>('/auth/register', {
@@ -19,6 +25,15 @@ export function login(params: LoginParams): Promise<AuthSession> {
 
 export function getMe(token: string): Promise<AuthUser> {
   return apiFetch<AuthUser>('/auth/me', { token });
+}
+
+export function updateProfile(token: string, params: UpdateProfileParams): Promise<AuthUser> {
+  return apiFetch<AuthUser>('/auth/me', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+    token,
+  });
 }
 
 export function loginGoogle(params: { idToken: string }): Promise<AuthSession> {

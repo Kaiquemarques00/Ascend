@@ -3,6 +3,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Patch,
   Post,
   Body,
   UnauthorizedException,
@@ -53,6 +54,14 @@ export class AuthController {
     }
 
     return this.authService.toAuthUserDto(found);
+  }
+
+  @Patch('me')
+  updateProfile(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: unknown,
+  ): Promise<AuthUserDto> {
+    return this.authService.updateProfile(user.id, body);
   }
 
   @Post('logout')

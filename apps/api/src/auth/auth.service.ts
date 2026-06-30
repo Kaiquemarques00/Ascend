@@ -22,6 +22,7 @@ import { googleAuthSchema } from './schemas/google-auth.schema';
 import { loginSchema, type LoginInput } from './schemas/login.schema';
 import { refreshSchema } from './schemas/refresh.schema';
 import { registerSchema, type RegisterInput } from './schemas/register.schema';
+import { updateProfileSchema } from './schemas/update-profile.schema';
 
 const BCRYPT_COST = 12;
 
@@ -168,6 +169,21 @@ export class AuthService {
 
   async validateUser(userId: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { id: userId } });
+  }
+
+  async updateProfile(userId: string, input: unknown): Promise<AuthUserDto> {
+    const parsed = updateProfileSchema.safeParse(input);
+
+    if (!parsed.success) {
+      throw new BadRequestException(this.formatZodError(parsed.error));
+    }
+
+    const user = await this.prisma.user.update({
+      where: { id: userId },
+      data: { name: parsed.data.name },
+    });
+
+    return this.toAuthUserDto(user);
   }
 
   toAuthUserDto(user: User): AuthUserDto {

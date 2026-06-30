@@ -322,4 +322,46 @@ describe('AuthService', () => {
       where: { tokenHash: expect.any(String) },
     });
   });
+
+  it('updates the profile name and returns the updated user', async () => {
+    prisma.user.update.mockResolvedValue({ ...mockUser, name: 'New Name' });
+
+    const result = await service.updateProfile(mockUser.id, { name: 'New Name' });
+
+    expect(prisma.user.update).toHaveBeenCalledWith({
+      where: { id: mockUser.id },
+      data: { name: 'New Name' },
+    });
+    expect(result).toEqual({
+      id: mockUser.id,
+      name: 'New Name',
+      email: mockUser.email,
+      createdAt: mockUser.createdAt.toISOString(),
+    });
+  });
+
+  it('trims whitespace from the profile name before saving', async () => {
+    prisma.user.update.mockResolvedValue({ ...mockUser, name: 'Trimmed' });
+
+    await service.updateProfile(mockUser.id, { name: '  Trimmed  ' });
+
+    expect(prisma.user.update).toHaveBeenCalledWith({
+      where: { id: mockUser.id },
+      data: { name: 'Trimmed' },
+    });
+  });
+
+  it('throws BadRequestException when the profile name is empty', async () => {
+    await expect(service.updateProfile(mockUser.id, { name: '   ' })).rejects.toThrow(
+      BadRequestException,
+    );
+    expect(prisma.user.update).not.toHaveBeenCalled();
+  });
+
+  it('throws BadRequestException when the profile name exceeds 100 chars', async () => {
+    await expect(
+      service.updateProfile(mockUser.id, { name: 'a'.repeat(101) }),
+    ).rejects.toThrow(BadRequestException);
+    expect(prisma.user.update).not.toHaveBeenCalled();
+  });
 });

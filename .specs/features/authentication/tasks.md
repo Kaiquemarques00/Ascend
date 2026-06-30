@@ -399,11 +399,11 @@ npm run lint && npm run build
 - Skill: NONE
 
 **Done when:**
-- [ ] `PATCH /auth/me` atualiza name; empty/ >100 chars → 400
-- [ ] Perfil: campo editável + salvar; cache React Query/AuthProvider atualiza
-- [ ] Unit test: updateProfile valid/invalid
-- [ ] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
-- [ ] Manual: change name → restart app → name persists
+- [x] `PATCH /auth/me` atualiza name; empty/ >100 chars → 400
+- [x] Perfil: campo editável + salvar; AuthProvider atualiza user state
+- [x] Unit test: updateProfile valid/invalid (4 testes)
+- [x] Gate check passes: `npm run test -w api` + `npm run build -w mobile`
+- [ ] Manual: change name → restart app → name persists (pendente — exige device/emulador rodando)
 
 **Tests:** unit  
 **Gate:** quick
@@ -529,7 +529,7 @@ Phase 2 (after T6):
 | T8 | **Deferred** | — | Apple OAuth — não iniciado → `deferred-oauth.md` |
 | T9 | Done | — | Refresh tokens + rotation |
 | T10 | Done | — | CI JWT stub + test step no job `api` |
-| T11 | Pending | — | Profile PATCH |
+| T11 | Done | — | Profile PATCH /auth/me + Perfil editável |
 
 ---
 

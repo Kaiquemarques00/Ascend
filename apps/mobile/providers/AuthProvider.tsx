@@ -15,6 +15,7 @@ import {
   loginGoogle as loginGoogleApi,
   logout as logoutApi,
   register as registerApi,
+  updateProfile as updateProfileApi,
 } from '@/lib/auth-api';
 import {
   clearSession,
@@ -22,7 +23,13 @@ import {
   getRefreshToken,
   setSession,
 } from '@/lib/auth-storage';
-import type { AuthSession, AuthUser, LoginParams, RegisterParams } from '@/lib/auth.types';
+import type {
+  AuthSession,
+  AuthUser,
+  LoginParams,
+  RegisterParams,
+  UpdateProfileParams,
+} from '@/lib/auth.types';
 
 interface AuthContextValue {
   user: AuthUser | null;
@@ -32,6 +39,7 @@ interface AuthContextValue {
   signUp: (params: RegisterParams) => Promise<void>;
   signInWithGoogle: (idToken: string) => Promise<void>;
   signOut: () => Promise<void>;
+  updateProfile: (params: UpdateProfileParams) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -144,6 +152,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
+  const updateProfile = useCallback(async (params: UpdateProfileParams) => {
+    const accessToken = await getAccessToken();
+
+    if (!accessToken) {
+      throw new Error('Not authenticated');
+    }
+
+    const updated = await updateProfileApi(accessToken, params);
+    setUser(updated);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -154,6 +173,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signUp,
         signInWithGoogle,
         signOut,
+        updateProfile,
       }}
     >
       {children}
